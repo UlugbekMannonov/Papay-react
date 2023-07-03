@@ -19,7 +19,7 @@ export function TopRestaurants() {
           alignItems={"center"}
           sx={{ mt: "45px" }}
         >
-          <Box className="category_title">TOP Restauranlar</Box>
+          <Box className="category_title">TOP Restaurantlar</Box>
           <Stack sx={{ mt: "43px" }} flexDirection={"row"} m={"16px"}>
             <CssVarsProvider>
               <Card
@@ -133,58 +133,7 @@ export function TopRestaurants() {
                     Tashkent, Yunusabad 4-1
                   </Typography>
                 </CardContent>
-                <CardOverflow
-                  sx={{
-                    display: "flex",
-                    gap: 1.5,
-                    py: 1.5,
-                    px: "var(--Card--padding",
-                    borderTop: "1px solid",
-                  }}
-                >
-                  <IconButton
-                    aria-label="Like minimal photography"
-                    size="md"
-                    variant="solid"
-                    color="neutral"
-                    sx={{
-                      position: "absolute",
-                      zIndex: 2,
-                      borderRadius: "50%",
-                      right: "1rem",
-                      bottom: 45,
-                      transform: "translateY(50%)",
-                      color: "rgba(0, 0, 0,.4)",
-                    }}
-                  >
-                    <Favorite style={{ fill: "white" }} />
-                  </IconButton>
-                  <Typography
-                    level="body3"
-                    sx={{
-                      fontweight: "md",
-                      color: "neutral.300",
-                      alignItems: "center",
-                      display: "flex",
-                    }}
-                  >
-                    100{""}
-                    <VisibilityIcon sx={{ fontSize: 20, marginLeft: "5px" }} />
-                  </Typography>
-                  <Box sx={{ width: 2, bgcolor: "divider" }} />
-                  <Typography
-                    level="body3"
-                    sx={{
-                      fontweight: "md",
-                      color: "neutral.300",
-                      alignItems: "center",
-                      display: "flex",
-                    }}
-                  >
-                    <div>50</div>
-                    <Favorite sx={{ fontSize: 20, marginLeft: "5px" }} />
-                  </Typography>
-                </CardOverflow>
+       
               </Card>
 
 
