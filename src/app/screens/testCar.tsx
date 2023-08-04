@@ -21,7 +21,7 @@ class Car extends Component {
 		// runs after first render = RETRIEVE DATA FROM BACKEND SERVER
 	}
 
-	componentWillMount() {
+	componentWillUnmount() {
         console.log('ran componentWillMount');
 
 		// runs after component unmount. component yo'qolgandan keyin ishga tushadi
