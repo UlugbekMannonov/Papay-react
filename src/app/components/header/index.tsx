@@ -90,7 +90,7 @@ export function NavbarHome(props: any) {
 							The Authentic Restaurant & Cafe
 						</Box>
 						<Box className="timeline_service">
-							{count} soat xizmatingizdamiz.
+							24 soat xizmatingizdamiz.
 						</Box>
 						<Box sx={{ mt: '90px' }}>
 							<Button

@@ -1,36 +1,35 @@
-import { Box, Container, Stack } from "@mui/material";
-import React from "react";
-import Card from "@mui/joy/Card";
-import CardCover from "@mui/joy/CardCover";
-import CardContent from "@mui/joy/CardContent";
-import Typography from "@mui/joy/Typography";
-import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
-import { CssVarsProvider } from "@mui/joy/styles";
-import { CardOverflow, IconButton } from "@mui/joy";
-import { Favorite } from "@mui/icons-material";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import { Box, Container, Stack } from '@mui/material';
+import React from 'react';
+import Card from '@mui/joy/Card';
+import CardCover from '@mui/joy/CardCover';
+import CardContent from '@mui/joy/CardContent';
+import Typography from '@mui/joy/Typography';
+import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
+import { CssVarsProvider } from '@mui/joy/styles';
+import { CardOverflow, IconButton } from '@mui/joy';
+import { Favorite } from '@mui/icons-material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 //REDUX
-import { useSelector } from "react-redux";
-import { createSelector } from "reselect";
-import { retrieveTopRestaurants } from "../../screens/HomePage/selector";
-import { Restaurant } from "../../../types/user";
-import { serviceApi } from "../../../lib/config";
+import { useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
+import { retrieveTopRestaurants } from '../../screens/HomePage/selector';
+import { Restaurant } from '../../../types/user';
+import { serverApi } from '../../../lib/config';
 
 //** REDUX SELECTOR */
 const topRestaurantsRetriever = createSelector(
-  retrieveTopRestaurants,
-  (topRestaurants) => ({
-    topRestaurants,
-  })
+	retrieveTopRestaurants,
+	(topRestaurants) => ({
+		topRestaurants,
+	})
 );
 
-
 export function TopRestaurants() {
-  const { topRestaurants } = useSelector(topRestaurantsRetriever);
+	const { topRestaurants } = useSelector(topRestaurantsRetriever);
 
 	console.log('topRestaurants:::', topRestaurants);
-  return (
+	return (
 		<div className="top_restaurant_frame">
 			<Container>
 				<Stack
@@ -41,7 +40,7 @@ export function TopRestaurants() {
 					<Box className="category_title">TOP Restaurantlar</Box>
 					<Stack sx={{ mt: '43px' }} flexDirection={'row'} m={'16px'}>
 						{topRestaurants.map((ele: Restaurant) => {
-							const image_path = `${serviceApi}/${ele.mb_image}`;
+							const image_path = `${serverApi}/${ele.mb_image}`;
 							return (
 								<CssVarsProvider key={ele._id}>
 									{' '}
@@ -105,9 +104,9 @@ export function TopRestaurants() {
 												<Favorite
 													style={{
 														fill:
-															ele?.me_liked && ele?.me_liked[0].my_favorite
-															  ? "red"
-															: 'white',
+															ele?.me_liked && ele?.me_liked[0]?.my_favorite
+																? 'red'
+																: 'white',
 													}}
 												/>
 											</IconButton>
