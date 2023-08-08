@@ -71,6 +71,7 @@ export function NavbarHome(props: any) {
 							<Button
 								variant="contained"
 								style={{ color: '#FFFFFF', background: '#1976D2' }}
+								onClick={props.handleLoginOpen}
 							>
 								KIRISH
 							</Button>
@@ -89,9 +90,7 @@ export function NavbarHome(props: any) {
 						<Box className="define_restaurant">
 							The Authentic Restaurant & Cafe
 						</Box>
-						<Box className="timeline_service">
-							24 soat xizmatingizdamiz.
-						</Box>
+						<Box className="timeline_service">24 soat xizmatingizdamiz.</Box>
 						<Box sx={{ mt: '90px' }}>
 							<Button
 								variant="contained"
@@ -101,7 +100,7 @@ export function NavbarHome(props: any) {
 									background: '#1976D2',
 									color: '#FFFFFF',
 								}}
-								onClick={() => setValue(!value)}
+								onClick={props.handleSignupOpen}
 							>
 								RO'YHATDAN O'TISH
 							</Button>

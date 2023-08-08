@@ -39,7 +39,7 @@ const topRestaurantsRetriever = createSelector(
 
 export function HomePage() {
 	// selector: store => data
-	// INITIALIZATION
+	// INITIALIZATIONS
 	const { setTopRestaurants, setBestRestaurants} = actionDispatch(
 		useDispatch()
 	);
