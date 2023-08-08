@@ -10,11 +10,6 @@ import { CardOverflow, IconButton } from '@mui/joy';
 import { Favorite, RefreshSharp, Visibility } from '@mui/icons-material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
-//REDUX
-import { useSelector } from 'react-redux';
-import { createSelector } from 'reselect';
-import { retrieveTopRestaurants } from '../../screens/HomePage/selector';
-import { Restaurant } from '../../../types/user';
 import { serverApi } from '../../../lib/config';
 import assert from 'assert';
 import { Definer } from '../../../lib/Definer';
@@ -24,6 +19,12 @@ import {
 } from '../../../lib/sweetAlert';
 import MemberApiService from '../../apiServices/memberApiService';
 import { useHistory } from 'react-router-dom';
+
+//REDUX
+import { useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
+import { retrieveTopRestaurants } from '../../screens/HomePage/selector';
+import { Restaurant } from '../../../types/user';
 
 //** REDUX SELECTOR */
 const topRestaurantsRetriever = createSelector(
@@ -39,9 +40,7 @@ export function TopRestaurants() {
 	const { topRestaurants } = useSelector(topRestaurantsRetriever);
 	console.log('topRestaurants:', topRestaurants);
 	const refs: any = useRef([]);
-
-	console.log('topRestaurants:::', topRestaurants);
-
+	
 	/** HANDLERS */
 	const chosenRestaurantHandler = (id: string) => {
 		history.push(`/restaurant/${id}`);
