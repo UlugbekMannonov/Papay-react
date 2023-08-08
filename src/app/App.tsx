@@ -27,6 +27,7 @@ import { Member } from '../types/user';
 import { serverApi } from '../lib/config';
 import {
 	sweetErrorHandling,
+	sweetFailureProvider,
 	sweetTopSmallSuccessAlert,
 } from '../lib/sweetAlert';
 import { Definer } from '../lib/Definer';
@@ -79,7 +80,7 @@ function App() {
 			await sweetTopSmallSuccessAlert('success', 700, true);
 		} catch (err: any) {
 			console.log(err);
-			sweetErrorHandling(Definer.general_err1);
+			sweetFailureProvider(Definer.general_err1);
 		}
 	};
 	return (
