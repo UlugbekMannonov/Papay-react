@@ -46,7 +46,7 @@ export function Footer() {
               </Stack>
               <Stack className="details" sx={{ mt: "42px" }}>
                 <Box className="detail_first">P.</Box>
-                <Box className="detail_second">+998 - 99 266 25 62</Box>
+                <Box className="detail_second">+998 - 99 014 4544</Box>
               </Stack>
               <Stack className="details" sx={{ mt: "9px" }}>
                 <Box className="detail_first">E.</Box>
@@ -56,7 +56,7 @@ export function Footer() {
           </Stack>
           <Box className="liner" sx={{ mt: "86px" }}></Box>
           <Box className="copyrights">
-            Copyright Papays 2022, All right reserved.
+            Copyright Papays 2023, All right reserved.
           </Box>
         </Stack>
       </Container>
