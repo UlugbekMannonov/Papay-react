@@ -33,6 +33,13 @@ import { ProductSearchObj } from "../../../types/others";
 import ProductApiService from "../../apiServices/productApiService";
 import { serverApi } from "../../../lib/config";
 import RestaurantApiService from '../../apiServices/restaurantApiService';
+import assert from 'assert';
+import {
+	sweetErrorHandling,
+	sweetTopSmallSuccessAlert,
+} from '../../../lib/sweetAlert';
+import MemberApiService from '../../apiServices/memberApiService';
+import { Definer } from '../../../lib/Definer';
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
@@ -81,9 +88,11 @@ export function OneRestaurant() {
 			restaurant_mb_id: restaurant_id,
 			product_collection: 'dish',
 		});
+	
+	const [productRebuild, setProductRebuild] = useState<Date>(new Date());
 
 	useEffect(() => {
-    const restaurantService = new RestaurantApiService();
+		const restaurantService = new RestaurantApiService();
 		restaurantService
 			.getRestaurants({ page: 1, limit: 10, order: 'random' })
 			.then((data) => setRandomRestaurants(data))
@@ -94,7 +103,7 @@ export function OneRestaurant() {
 			.getTargetProducts(targetProductSearchObj)
 			.then((data) => setTargetProducts(data))
 			.catch((err) => console.log(err));
-	}, [targetProductSearchObj]);
+	}, [targetProductSearchObj, productRebuild]);
 
 	/** HANDLERS **/
   const chosenRestaurantHandler = (id: string) => {
@@ -102,6 +111,36 @@ export function OneRestaurant() {
 		targetProductSearchObj.restaurant_mb_id = id;
 		setTargetProductSearchObj({ ...targetProductSearchObj });
 		history.push(`/restaurant/${id}`);
+	};
+
+	const searchCollectionHandler = (collection: string) => {
+		targetProductSearchObj.page = 1;
+		targetProductSearchObj.product_collection = collection;
+		setTargetProductSearchObj({ ...targetProductSearchObj });
+	};
+	const searchOrderHandler = (order: string) => {
+		targetProductSearchObj.page = 1;
+		targetProductSearchObj.order = order;
+		setTargetProductSearchObj({ ...targetProductSearchObj });
+	};
+
+	const targetLikeProduct = async (e: any) => {
+		try {
+			assert.ok(localStorage.getItem('member_data'), Definer.auth_err1);
+
+			const memberService = new MemberApiService(),
+				like_result: any = await memberService.memberLikeTarget({
+					like_ref_id: e.target.id,
+					group_type: 'product',
+				});
+			assert.ok(like_result, Definer.general_err1);
+
+			await sweetTopSmallSuccessAlert('success', 700, false);
+			setProductRebuild(new Date());
+		} catch (err: any) {
+			console.log('targetLikeProduct, ERROR:', err);
+			sweetErrorHandling(err).then();
+		}
 	};
 
 	return (
@@ -153,7 +192,7 @@ export function OneRestaurant() {
 							}}
 						>
 							{randomRestaurants.map((ele: Restaurant) => {
-                const image_path = `${serverApi}/${ele.mb_image}`;
+								const image_path = `${serverApi}/${ele.mb_image}`;
 								return (
 									<SwiperSlide
 										onClick={() => chosenRestaurantHandler(ele._id)}
@@ -183,16 +222,32 @@ export function OneRestaurant() {
 						sx={{ mt: '65px' }}
 					>
 						<Box className={'dishs_filter_box'}>
-							<Button variant={'contained'} color="secondary">
+							<Button
+								variant={'contained'}
+								color="secondary"
+								onClick={() => searchOrderHandler('createdAt')}
+							>
 								New
 							</Button>
-							<Button variant={'contained'} color="secondary">
+							<Button
+								variant={'contained'}
+								color="secondary"
+								onClick={() => searchOrderHandler('product_price')}
+							>
 								Price
 							</Button>
-							<Button variant={'contained'} color="secondary">
+							<Button
+								variant={'contained'}
+								color="secondary"
+								onClick={() => searchOrderHandler('product_likes')}
+							>
 								Likes
 							</Button>
-							<Button variant={'contained'} color="secondary">
+							<Button
+								variant={'contained'}
+								color="secondary"
+								onClick={() => searchOrderHandler('product_views')}
+							>
 								Views
 							</Button>
 						</Box>
@@ -204,19 +259,39 @@ export function OneRestaurant() {
 					>
 						<Stack className={'dish_category_box'}>
 							<div className={'dish_category_main'}>
-								<Button variant={'contained'} color="secondary">
+								<Button
+									variant={'contained'}
+									color="secondary"
+									onClick={() => searchCollectionHandler('etc')}
+								>
 									others
 								</Button>
-								<Button variant={'contained'} color="secondary">
+								<Button
+									variant={'contained'}
+									color="secondary"
+									onClick={() => searchCollectionHandler('dessert')}
+								>
 									dessert
 								</Button>
-								<Button variant={'contained'} color="secondary">
+								<Button
+									variant={'contained'}
+									color="secondary"
+									onClick={() => searchCollectionHandler('drink')}
+								>
 									drinks
 								</Button>
-								<Button variant={'contained'} color="secondary">
+								<Button
+									variant={'contained'}
+									color="secondary"
+									onClick={() => searchCollectionHandler('salad')}
+								>
 									salad
 								</Button>
-								<Button variant={'contained'} color="secondary">
+								<Button
+									variant={'contained'}
+									color="secondary"
+									onClick={() => searchCollectionHandler('dish')}
+								>
 									dishes
 								</Button>
 							</div>
@@ -256,6 +331,7 @@ export function OneRestaurant() {
 														icon={<FavoriteBorder style={{ color: 'white' }} />}
 														id={product._id}
 														checkedIcon={<Favorite style={{ color: 'red' }} />}
+														onClick={targetLikeProduct}
 														checked={
 															product?.me_liked &&
 															product?.me_liked[0]?.my_favorite

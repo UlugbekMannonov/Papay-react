@@ -7,6 +7,7 @@ export const retrieveTargetRestaurants = createSelector(
 	selectRestaurantPage,
 	(RestaurantPage) => RestaurantPage.targetRestaurants
 );
+
 export const retrieveRandomRestaurants = createSelector(
 	selectRestaurantPage,
 	(RestaurantPage) => RestaurantPage.randomRestaurants
