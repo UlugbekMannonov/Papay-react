@@ -40,8 +40,7 @@ import {
 	sweetErrorHandling,
 	sweetTopSmallSuccessAlert,
 } from '../../../lib/sweetAlert';
-
-const order_list = Array.from(Array(8).keys());
+import { useHistory } from 'react-router-dom';
 
 //** REDUX SLICE */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -59,6 +58,7 @@ const targetRestaurantsRetriever = createSelector(
 
 export function AllRestaurants() {
 	/** INITIALIZATIONS */
+	const history = useHistory();
 	const { setTargetRestaurants } = actionDispatch(useDispatch());
 	const { targetRestaurants } = useSelector(targetRestaurantsRetriever);
 	const [targetSearchObject, setTargetSearchObject] = useState<SearchObj>({
@@ -78,6 +78,9 @@ export function AllRestaurants() {
 	}, [targetSearchObject]);
 
 	// HANDLERS
+	const chosenRestauarantHandler = (id: string) => {
+		history.push(`/restaurant/${id}`);
+	};
 	const searchHandler = (category: string) => {
 		targetSearchObject.page = 1;
 		targetSearchObject.order = category;
@@ -149,12 +152,14 @@ export function AllRestaurants() {
                 				const image_path = `${serverApi}/${ele.mb_image}`;
 								return (
 									<Card
+										onClick={() => chosenRestauarantHandler(ele._id)}
 										variant="outlined"
 										sx={{
 											minHeight: 410,
 											minWidth: 290,
 											mx: '17px',
 											my: '20px',
+											cursor: 'pointer',
 										}}
 									>
 										<CardOverflow>
@@ -177,14 +182,14 @@ export function AllRestaurants() {
 												}}
 											>
 												<Favorite
-                          							onClick={(e) => targetLikeHandler(e, ele._id)}
-                          							style={{
-                            							fill:
-                              								ele?.me_liked && ele?.me_liked[0]?.my_favorite
-                                								? "red"
-                                								: "white",
-                         							 }}
-                        						/>
+													onClick={(e) => targetLikeHandler(e, ele._id)}
+													style={{
+														fill:
+															ele?.me_liked && ele?.me_liked[0]?.my_favorite
+																? 'red'
+																: 'white',
+													}}
+												/>
 											</IconButton>
 										</CardOverflow>
 										<Typography level="h2" sx={{ fontSize: 'md', mt: 2 }}>
@@ -244,10 +249,10 @@ export function AllRestaurants() {
 												}}
 											>
 												<div
-                          							ref={(element) => (refs.current[ele._id] = element)}
-                        						>
-                          							{ele.mb_likes}
-                        						</div>
+													ref={(element) => (refs.current[ele._id] = element)}
+												>
+													{ele.mb_likes}
+												</div>
 												<Favorite sx={{ fontSize: 20, marginLeft: '5px' }} />
 											</Typography>
 										</CardOverflow>

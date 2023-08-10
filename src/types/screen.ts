@@ -4,8 +4,9 @@ import { Restaurant } from './user';
 
 /** REACT APP STATE */
 export interface AppRootState {
+	restaurantPage: any;
 	homePage: HomePageState;
-	restaurantPage: RestaurantPageState;
+	restaurantPageState: RestaurantPageState;
 }
 
 /** HANDLERS */
