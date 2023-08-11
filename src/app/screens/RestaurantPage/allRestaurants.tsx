@@ -104,10 +104,10 @@ export function AllRestaurants() {
 
 			if (like_result.like_status > 0) {
 				e.target.style.fill = 'red';
-				refs.current[like_result.like_ref_id].innerHTML++;
+				refs.current[like_result?.like_ref_id].innerHTML++;
 			} else {
 				e.target.style.fill = 'white';
-				refs.current[like_result.like_ref_id].innerHTML--;
+				refs.current[like_result?.like_ref_id].innerHTML--;
 			}
 
 			await sweetTopSmallSuccessAlert('success', 700, false);
@@ -171,6 +171,9 @@ export function AllRestaurants() {
 												size="md"
 												variant="solid"
 												color="danger"
+												onClick={(e) => {
+													e.stopPropagation();
+												}}
 												sx={{
 													position: 'absolute',
 													zIndex: 2,

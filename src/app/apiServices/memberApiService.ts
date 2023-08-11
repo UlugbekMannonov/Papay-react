@@ -33,16 +33,19 @@ class MemberApiService {
     try {
       const result = await axios.post(this.path + "/signup", signup_data, {
         withCredentials: true,
+        
       });
+      console.log('data ::::', result.data.data);
       console.log("state:", result.data.state);
       assert.ok(result?.data, Definer.general_err1);
       assert.ok(result?.data?.state != "fail", result?.data?.message);
 
       const member: Member = result.data.data;
       localStorage.setItem("member_data", JSON.stringify(member));
+      console.log("member:::::", member);
       return member;
     } catch (err: any) {
-      console.log(`ERROR ::: loginRequest ${err.message}`);
+      console.log(`ERROR ::: signupRequest ${err.message}`);
       throw err;
     }
   }

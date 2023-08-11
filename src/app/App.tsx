@@ -89,7 +89,7 @@ function App() {
 				<NavbarHome
 					setPath={setPath}
 					handleLoginOpen={handleLoginOpen}
-					handleSignupOpen={handleSignUpOpen}
+					handleSignUpOpen={handleSignUpOpen}
 					anchorEl={anchorEl}
 					open={open}
 					handleLogoutClick={handleLogoutClick}
@@ -101,7 +101,7 @@ function App() {
 				<NavbarRestaurant
 					setPath={setPath}
 					handleLoginOpen={handleLoginOpen}
-					handleSignupOpen={handleSignUpOpen}
+					handleSignUpOpen={handleSignUpOpen}
 					anchorEl={anchorEl}
 					open={open}
 					handleLogoutClick={handleLogoutClick}
@@ -113,7 +113,7 @@ function App() {
 				<NavbarOthers
 					setPath={setPath}
 					handleLoginOpen={handleLoginOpen}
-					handleSignupOpen={handleSignUpOpen}
+					handleSignUpOpen={handleSignUpOpen}
 					anchorEl={anchorEl}
 					open={open}
 					handleLogoutClick={handleLogoutClick}
@@ -153,8 +153,8 @@ function App() {
 				handleLoginOpen={handleLoginOpen}
 				handleLoginClose={handleLoginClose}
 				signUpOpen={signUpOpen}
-				handleSignupOpen={handleSignUpOpen}
-				handleSignupClose={handleSignUpClose}
+				handleSignUpOpen={handleSignUpOpen}
+				handleSignUpClose={handleSignUpClose}
 			/>
 		</Router>
 	);

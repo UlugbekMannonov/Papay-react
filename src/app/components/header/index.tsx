@@ -165,7 +165,7 @@ export function NavbarHome(props: any) {
 										background: '#1976D2',
 										color: '#FFFFFF',
 									}}
-									onClick={props.handleSignupOpen}
+									onClick={props.handleSignUpOpen}
 								>
 									RO'YHATDAN O'TISH
 								</Button>
