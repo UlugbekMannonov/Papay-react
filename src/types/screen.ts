@@ -1,4 +1,5 @@
 import { BoArticle } from './boArticle';
+import { Order } from './order';
 import { Product } from './product';
 import { Restaurant } from './user';
 
@@ -26,4 +27,11 @@ export interface RestaurantPageState {
   chosenRestaurant: Restaurant | null;
   targetProducts: Product[];
   chosenProduct: Product | null;
+}
+
+//** ORDERS PAGE */
+export interface OrderPageState {
+  pausedOrders: Order[];
+  processOrders: Order[];
+  finishedOrders: Order[];
 }
