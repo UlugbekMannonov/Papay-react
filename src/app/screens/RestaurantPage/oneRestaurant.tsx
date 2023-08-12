@@ -98,12 +98,17 @@ export function OneRestaurant() {
 			.then((data) => setRandomRestaurants(data))
 			.catch((err) => console.log(err));
 
+			restaurantService
+				.getChosenRestaurant(chosenRestaurantId)
+				.then((data) => setChosenRestaurant(data))
+				.catch((err) => console.log(err));
+
 		const productService = new ProductApiService();
 		productService
 			.getTargetProducts(targetProductSearchObj)
 			.then((data) => setTargetProducts(data))
 			.catch((err) => console.log(err));
-	}, [targetProductSearchObj, productRebuild]);
+	}, [chosenRestaurantId, targetProductSearchObj, productRebuild]);
 
 	/** HANDLERS **/
   const chosenRestaurantHandler = (id: string) => {
@@ -122,6 +127,10 @@ export function OneRestaurant() {
 		targetProductSearchObj.page = 1;
 		targetProductSearchObj.order = order;
 		setTargetProductSearchObj({ ...targetProductSearchObj });
+	};
+
+	const chosenDishHandler = (id: string) => {
+		history.push(`/restaurant/dish/${id}`);
 	};
 
 	const targetLikeProduct = async (e: any) => {
@@ -299,10 +308,10 @@ export function OneRestaurant() {
 
 						<Stack className={'dish_wrapper'}>
 							{targetProducts.map((product: Product) => {
-								const updatedData = JSON.parse(
-									JSON.stringify(product.product_images[0]).replace(/\\/g, '/')
-								);
-								const image_path = `${serverApi}/${updatedData}`;
+								const image_path = `${serverApi}/${product.product_images[0].replace(
+									/\\/g,
+									'/'
+								)}`;
 								const size_volume =
 									product.product_collection === 'drink'
 										? product.product_volume + 'l'
@@ -437,12 +446,12 @@ export function OneRestaurant() {
 					<Box
 						className={'about_left'}
 						sx={{
-							backgroundImage: `url('/restaurant/texas_de_brazil.jpeg')`,
+							backgroundImage: `url(${chosenRestaurant?.mb_image})`,
 						}}
 					>
 						<div className={'about_left_desc'}>
-							<span>Burak</span>
-							<p>Eng mazzali oshxona</p>
+							<span>{chosenRestaurant?.mb_nick}</span>
+							<p>{chosenRestaurant?.mb_description}</p>
 						</div>
 					</Box>
 					<Box className={'about_right'}>
