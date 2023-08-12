@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from '@mui/system';
 import '../../../css/order.css';
 import { Box, Stack } from '@mui/material';
@@ -13,9 +13,29 @@ import ProcessOrders from '../../components/orders/processOrders';
 import FinishedOrders from '../../components/orders/finishedOrders';
 import Marginer from '../../components/marginer';
 
-export function OrdersPage() {
-	const [value, setValue] = useState('1');
+// REDUX
+import { createSelector } from "reselect";
+import { Dispatch } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+import { Order } from "../../../types/order";
+import { setFinishedOrders, setPausedOrders, setProcessOrders } from "./slice";
 
+/** REDUX SLICE **/
+const actionDispatch = (dispatch: Dispatch) => ({
+  setPausedOrders: (data: Order[]) => dispatch(setPausedOrders(data)),
+  setProcessOrders: (data: Order) => dispatch(setProcessOrders(data)),
+  setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
+});
+
+export function OrdersPage() {
+	/** INITIALIATIONS **/
+	const [value, setValue] = useState('1');
+	const { setPausedOrders, setProcessOrders, setFinishedOrders } =
+		actionDispatch(useDispatch());
+
+	useEffect(() => {}, []);
+
+	/** HANDLERS **/
 	const handleChange = (event: any, newValue: string) => {
 		setValue(newValue);
 	};

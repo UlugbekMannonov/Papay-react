@@ -8,6 +8,7 @@ export interface AppRootState {
 	// restaurantPage: any;
 	homePage: HomePageState;
 	restaurantPage: RestaurantPageState;
+	ordersPage: OrdersPageState;
 }
 
 /** HANDLERS */
@@ -30,7 +31,7 @@ export interface RestaurantPageState {
 }
 
 //** ORDERS PAGE */
-export interface OrderPageState {
+export interface OrdersPageState {
   pausedOrders: Order[];
   processOrders: Order[];
   finishedOrders: Order[];
