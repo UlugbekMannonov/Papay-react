@@ -63,13 +63,15 @@ const chosenRestaurantRetriever = createSelector(
 
 const chosen_list = Array.from(Array(3).keys());
 
-export function ChosenDish() {
+export function ChosenDish(props: any) {
 	// INITIALIZATIONS
 
-  	const {setChosenProduct, setChosenRestaurant} = actionDispatch(useDispatch());
-  	const {chosenProduct} = useSelector(chosenProductRetriever);
-  	const { chosenRestaurant } = useSelector(chosenRestaurantRetriever);
-  	let { dish_id } = useParams<{ dish_id: string }>();
+	const { setChosenProduct, setChosenRestaurant } = actionDispatch(
+		useDispatch()
+	);
+	const { chosenProduct } = useSelector(chosenProductRetriever);
+	const { chosenRestaurant } = useSelector(chosenRestaurantRetriever);
+	let { dish_id } = useParams<{ dish_id: string }>();
 	const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 	const [productRebuild, setProductRebuild] = useState<Date>(new Date());
 
@@ -111,8 +113,6 @@ export function ChosenDish() {
 			sweetErrorHandling(err).then();
 		}
 	};
-
-
 
 	return (
 		<div className="chosen_dish_page">
@@ -175,9 +175,7 @@ export function ChosenDish() {
 						<strong className={'dish_txt'}>
 							{chosenProduct?.product_name}
 						</strong>
-						<span className={'resto_name'}>
-							{chosenRestaurant?.mb_nick}
-						</span>
+						<span className={'resto_name'}>{chosenRestaurant?.mb_nick}</span>
 						<Box className={'rating_box'}>
 							<Rating name="half-rating" defaultValue={3.5} precision={0.5} />
 							<div className="evaluation_box">
@@ -223,9 +221,22 @@ export function ChosenDish() {
 							<span>Narx:</span>
 							<span>${chosenProduct?.product_price}</span>
 						</div>
-						<div className="button_box">
-							<Button variant="contained">SAVATGA QO'SHISH</Button>
-						</div>
+						
+						<div className={"button_box"}>
+            				<Button
+              					variant="contained"
+              					style={{
+                					width: "230px",
+               						height: "44px",
+                					borderRadius: "4px",
+                					fontSize: "15px",
+              					}}
+              				onClick={() => {
+                				props.onAdd(chosenProduct);
+              				}}>
+              				Savatga qo'shish
+            				</Button>
+          				</div>
 					</Box>
 				</Stack>
 			</Container>

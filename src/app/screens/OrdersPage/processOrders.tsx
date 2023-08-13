@@ -1,7 +1,11 @@
 import { TabPanel } from '@mui/lab';
 import { Box, Button, Stack } from '@mui/material';
 import React from 'react';
-import Moment from 'moment';
+import { format } from 'date-fns';
+
+
+
+
 
 
 // REDUX
@@ -22,7 +26,11 @@ const pausedOrders = [
 	[1, 2, 3],
 	[1, 2, 3],
 ];
-const time = moment().format('YYYY-MM-DD HH:mm');
+const currentDate = new Date();
+const time = format(currentDate, 'yyyy-MM-dd HH:mm:ss');
+
+
+
 
 export function ProcessOrders(props: any) {
 	/** INITIALIZATIONS **/

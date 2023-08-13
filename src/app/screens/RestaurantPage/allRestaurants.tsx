@@ -198,7 +198,7 @@ export function AllRestaurants() {
 										<Typography level="h2" sx={{ fontSize: 'md', mt: 2 }}>
 											{ele.mb_nick}
 										</Typography>
-										<Typography level="body2" sx={{ mt: 0.5, mb: 2 }}>
+										<Typography sx={{ mt: 0.5, mb: 2 }}>
 											<Link
 												href=""
 												startDecorator={<LocationOnRoundedIcon />}
@@ -207,7 +207,7 @@ export function AllRestaurants() {
 												{ele.mb_address}
 											</Link>
 										</Typography>
-										<Typography level="body2" sx={{ mt: 0.5, mb: 2 }}>
+										<Typography sx={{ mt: 0.5, mb: 2 }}>
 											<Link
 												href=""
 												startDecorator={<CallIcon />}
@@ -228,7 +228,7 @@ export function AllRestaurants() {
 											}}
 										>
 											<Typography
-												level="body3"
+												
 												sx={{
 													fontweight: 'md',
 													color: 'text.secondary',
@@ -243,7 +243,7 @@ export function AllRestaurants() {
 											</Typography>
 											<Box sx={{ width: 2, bgcolor: 'divider' }} />
 											<Typography
-												level="body3"
+												
 												sx={{
 													fontweight: 'md',
 													color: 'text.secondary',

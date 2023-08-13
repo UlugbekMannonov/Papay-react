@@ -158,7 +158,7 @@ export function TopRestaurants() {
 												/>
 											</IconButton>
 											<Typography
-												level="body3"
+												// level="body3"
 												sx={{
 													fontweight: 'md',
 													color: 'neutral.300',
@@ -173,7 +173,7 @@ export function TopRestaurants() {
 											</Typography>
 											<Box sx={{ width: 2, bgcolor: 'divider' }} />
 											<Typography
-												level="body3"
+												// level="body3"
 												sx={{
 													fontweight: 'md',
 													color: 'neutral.300',

@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { Favorite, LocationOnRounded } from '@mui/icons-material';
 import {
 	AspectRatio,
 	Card,
@@ -9,13 +10,9 @@ import {
 	Typography,
 } from '@mui/joy';
 import { Box, Button, Container, Stack } from '@mui/material';
-import Favorite from '@mui/icons-material/Favorite';
-import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import CallIcon from '@mui/icons-material/Call';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { SentimentNeutral } from '@mui/icons-material';
-
-//REDUX
+// REDUX
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import { retrieveBestRestaurants } from '../../screens/HomePage/selector';
@@ -24,13 +21,13 @@ import { serverApi } from '../../../lib/config';
 import assert from 'assert';
 import MemberApiService from '../../apiServices/memberApiService';
 import { Definer } from '../../../lib/Definer';
+import { useHistory } from 'react-router-dom';
 import {
 	sweetErrorHandling,
 	sweetTopSmallSuccessAlert,
 } from '../../../lib/sweetAlert';
-import { useHistory } from 'react-router-dom';
 
-//** REDUX SELECTOR */
+// REDUX SELECTOR
 const bestRestaurantsRetriever = createSelector(
 	retrieveBestRestaurants,
 	(bestRestaurants) => ({
@@ -40,16 +37,15 @@ const bestRestaurantsRetriever = createSelector(
 
 export function BestRestaurants() {
 	// INITIALIZATIONS
-	const { bestRestaurants } = useSelector(bestRestaurantsRetriever);
 	const history = useHistory();
+	const { bestRestaurants } = useSelector(bestRestaurantsRetriever);
 	const refs: any = useRef([]);
 
-	/** HANDLERS */
-
+	//HANDLERS
 	const chosenRestaurantHandler = (id: string) => {
 		history.push(`/restaurant/${id}`);
 	};
-	const goRestaurantHandler = () => history.push('/restaurant');
+	const goRestaurantsHandler = () => history.push('/restaurant');
 	const targetLikeBest = async (e: any, id: string) => {
 		try {
 			assert.ok(localStorage.getItem('member_data'), Definer.auth_err1);
@@ -80,11 +76,8 @@ export function BestRestaurants() {
 		<div className="best_restaurant_frame">
 			<img
 				src={'icons/line_group.svg'}
-				style={{
-					position: 'absolute',
-					left: '6%',
-					transform: 'rotate(90degree',
-				}}
+				alt=""
+				style={{ position: 'absolute', left: '6%' }}
 			/>
 			<Container sx={{ paddingTop: '153px' }}>
 				<Stack flexDirection={'column'} alignItems={'center'}>
@@ -106,7 +99,7 @@ export function BestRestaurants() {
 									>
 										<CardOverflow>
 											<AspectRatio ratio="1">
-												<img src={image_path} />
+												<img src={image_path} alt="" />
 											</AspectRatio>
 											<IconButton
 												aria-label="Like minimal photography"
@@ -120,14 +113,16 @@ export function BestRestaurants() {
 													right: '1rem',
 													bottom: 0,
 													transform: 'translateY(50%)',
-													color: 'rgba(0,0,0,.4)',
+													color: 'rgba(0, 0, 0, .4)',
 												}}
 												onClick={(e) => {
 													e.stopPropagation();
-												}}
+												}} // like buttoni bosilsa restauarnt pagega kirib ketmasligi uchun
 											>
 												<Favorite
-													onClick={(e) => targetLikeBest(e, ele._id)}
+													onClick={(e) => {
+														targetLikeBest(e, ele._id);
+													}}
 													style={{
 														fill:
 															ele?.me_liked && ele?.me_liked[0]?.my_favorite
@@ -138,18 +133,18 @@ export function BestRestaurants() {
 											</IconButton>
 										</CardOverflow>
 										<Typography level="h2" sx={{ fontSize: 'md', mt: 2 }}>
-											{ele.mb_nick} restaurant
+											{ele.mb_nick}
 										</Typography>
-										<Typography level="body2" sx={{ mt: 0.5, mb: 2 }}>
+										<Typography sx={{ mt: 0.5, mb: 2 }}>
 											<Link
 												href=""
-												startDecorator={<LocationOnRoundedIcon />}
+												startDecorator={<LocationOnRounded />}
 												textColor="neutral.700"
 											>
 												{ele.mb_address}
 											</Link>
 										</Typography>
-										<Typography level="body2" sx={{ mt: 0.5, mb: 2 }}>
+										<Typography sx={{ mt: 0.5, mb: 2 }}>
 											<Link
 												href=""
 												startDecorator={<CallIcon />}
@@ -163,16 +158,16 @@ export function BestRestaurants() {
 												display: 'flex',
 												gap: 1.5,
 												py: 1.5,
-												px: 'var(--Card--padding',
+												px: 'var(--Card-padding)',
 												borderTop: '1px solid',
 												borderColor: 'neutral.outlineBorder',
 												bgcolor: 'background.level1',
 											}}
 										>
 											<Typography
-												level="body3"
+											
 												sx={{
-													fontweight: 'md',
+													fontWeight: 'md',
 													color: 'text.secondary',
 													alignItems: 'center',
 													display: 'flex',
@@ -183,20 +178,17 @@ export function BestRestaurants() {
 													sx={{ fontSize: 20, marginLeft: '5px' }}
 												/>
 											</Typography>
-											<Box sx={{ width: 2, bgcolor: 'divider' }} />
+											<Box sx={{ width: 2, bgcolor: 'devider' }} />
 											<Typography
-												level="body3"
 												sx={{
-													fontweight: 'md',
+													fontWeight: 'md',
 													color: 'text.secondary',
 													alignItems: 'center',
 													display: 'flex',
 												}}
 											>
 												<div
-													ref={(element) => {
-														refs.current[ele._id] = element;
-													}}
+													ref={(element) => (refs.current[ele._id] = element)}
 												>
 													{ele.mb_likes}
 												</div>
@@ -214,8 +206,9 @@ export function BestRestaurants() {
 						justifyContent={'flex-end'}
 						style={{ width: '100%', marginTop: '16px' }}
 					>
-						<Button style={{ background: '#1976D2', color: '#FFFFFF'}}
-						onClick = { goRestaurantHandler }
+						<Button
+							style={{ background: '#1976d2', color: '#FFFFFF' }}
+							onClick={goRestaurantsHandler}
 						>
 							Barchasini Ko'rish
 						</Button>
