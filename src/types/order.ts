@@ -11,6 +11,7 @@ export interface OrderItem {
 }
 
 export interface Order {
+	map(arg0: (item: any) => import("react/jsx-runtime").JSX.Element): import("react").ReactNode;
 	_id: string;
 	order_total_amount: number;
 	order_delivery_cost: number;

@@ -8,9 +8,9 @@ import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
-import PausedOrders from '../../components/orders/pausedOrders';
-import ProcessOrders from '../../components/orders/processOrders';
-import FinishedOrders from '../../components/orders/finishedOrders';
+import { PausedOrders } from '../../components/orders/pausedOrders';
+import { ProcessOrders } from '../../components/orders/processOrders';
+import { FinishedOrders } from '../../components/orders/finishedOrders';
 import Marginer from '../../components/marginer';
 
 // REDUX
@@ -19,6 +19,7 @@ import { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { Order } from "../../../types/order";
 import { setFinishedOrders, setPausedOrders, setProcessOrders } from "./slice";
+import OrderApiService from '../../apiServices/orderApiService';
 
 /** REDUX SLICE **/
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -27,13 +28,27 @@ const actionDispatch = (dispatch: Dispatch) => ({
   setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
 });
 
-export function OrdersPage() {
+export function OrdersPage(props: any) {
 	/** INITIALIATIONS **/
 	const [value, setValue] = useState('1');
 	const { setPausedOrders, setProcessOrders, setFinishedOrders } =
 		actionDispatch(useDispatch());
 
-	useEffect(() => {}, []);
+	useEffect(() => {
+		const orderService = new OrderApiService();
+		orderService
+			.getMyOrders('paused')
+			.then((data) => setPausedOrders(data))
+			.catch((err) => console.log(err));
+		orderService
+			.getMyOrders('process')
+			.then((data) => setProcessOrders(data))
+			.catch((err) => console.log(err));
+		orderService
+			.getMyOrders('finished')
+			.then((data) => setFinishedOrders(data))
+			.catch((err) => console.log(err));
+	}, [props.orderRebuild]);
 
 	/** HANDLERS **/
 	const handleChange = (event: any, newValue: string) => {
@@ -71,9 +86,9 @@ export function OrdersPage() {
 							</Box>
 						</Box>
 						<Stack className={'order_main_content'}>
-							<PausedOrders />
-							<ProcessOrders />
-							<FinishedOrders />
+							<PausedOrders setOrderRebuild={props.setOrderRebuild} />
+							<ProcessOrders setOrderRebuild={props.setOrderRebuild} />
+							<FinishedOrders setOrderRebuild={props.setOrderRebuild} />
 						</Stack>
 					</TabContext>
 				</Stack>

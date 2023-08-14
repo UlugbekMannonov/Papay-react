@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, Container, Stack } from "@mui/material";
 import Button from "@mui/material/Button";
 import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
+import TabContext from '@material-ui/lab/TabContext';
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { MemberPosts } from "./memberPosts";

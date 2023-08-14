@@ -5,7 +5,7 @@ import "../../../css/community.css";
 import { TargetArticles } from "./targetArticles";
 import { CommunityChats } from "./communityChats";
 import Tab from "@material-ui/core/Tab";
-import TabContext from "@material-ui/lab/TabContext";
+import TabContext from '@material-ui/lab/TabContext';
 import TabList from "@material-ui/lab/TabList";
 import TabPanel from "@material-ui/lab/TabPanel";
 import PaginationItem from "@mui/material/PaginationItem";
