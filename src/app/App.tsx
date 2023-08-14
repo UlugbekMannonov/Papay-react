@@ -28,6 +28,8 @@ import MemberApiService from './apiServices/memberApiService';
 import '../app/apiServices/verify';
 import { CartItem } from '../types/others';
 import { Product } from '../types/product';
+
+
 function App() {
 	/** INITIALIZATIONS **/
 	const [verifiedMemberData, setVerifiedMemberData] = useState<Member | null>(
@@ -55,6 +57,7 @@ function App() {
 			setVerifiedMemberData(member_data);
 		}
 	}, [signUpOpen, loginOpen]);
+	
 	/** HANDLERS **/
 	const handleSignUpOpen = () => setSignUpOpen(true);
 	const handleSignUpClose = () => setSignUpOpen(false);
