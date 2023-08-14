@@ -69,9 +69,9 @@ const targetProductsRetriever = createSelector(
   })
 );
 
-export function OneRestaurant() {
+export function OneRestaurant(props: any) {
 	// INITIALIZATIONS
-  const history = useHistory();
+	const history = useHistory();
 	let { restaurant_id } = useParams<{ restaurant_id: string }>();
 	const { setRandomRestaurants, setChosenRestaurant, setTargetProducts } =
 		actionDispatch(useDispatch());
@@ -88,7 +88,7 @@ export function OneRestaurant() {
 			restaurant_mb_id: restaurant_id,
 			product_collection: 'dish',
 		});
-	
+
 	const [productRebuild, setProductRebuild] = useState<Date>(new Date());
 
 	useEffect(() => {
@@ -98,10 +98,10 @@ export function OneRestaurant() {
 			.then((data) => setRandomRestaurants(data))
 			.catch((err) => console.log(err));
 
-			restaurantService
-				.getChosenRestaurant(chosenRestaurantId)
-				.then((data) => setChosenRestaurant(data))
-				.catch((err) => console.log(err));
+		restaurantService
+			.getChosenRestaurant(chosenRestaurantId)
+			.then((data) => setChosenRestaurant(data))
+			.catch((err) => console.log(err));
 
 		const productService = new ProductApiService();
 		productService
@@ -111,7 +111,7 @@ export function OneRestaurant() {
 	}, [chosenRestaurantId, targetProductSearchObj, productRebuild]);
 
 	/** HANDLERS **/
-  const chosenRestaurantHandler = (id: string) => {
+	const chosenRestaurantHandler = (id: string) => {
 		setChosenRestaurantId(id);
 		targetProductSearchObj.restaurant_mb_id = id;
 		setTargetProductSearchObj({ ...targetProductSearchObj });
@@ -354,7 +354,13 @@ export function OneRestaurant() {
 													/>
 												</Badge>
 											</Button>
-											<Button className={'view_btn'}>
+											<Button
+												className={'view_btn'}
+												onClick={(e) => {
+													props.onAdd(product);
+													e.stopPropagation();
+												}}
+											>
 												<img
 													src={'/icons/shopping_cart.svg'}
 													style={{ display: 'flex' }}

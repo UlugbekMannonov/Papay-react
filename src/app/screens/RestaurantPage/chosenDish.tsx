@@ -221,22 +221,24 @@ export function ChosenDish(props: any) {
 							<span>Narx:</span>
 							<span>${chosenProduct?.product_price}</span>
 						</div>
-						
-						<div className={"button_box"}>
-            				<Button
-              					variant="contained"
-              					style={{
-                					width: "230px",
-               						height: "44px",
-                					borderRadius: "4px",
-                					fontSize: "15px",
-              					}}
-              				onClick={() => {
-                				props.onAdd(chosenProduct);
-              				}}>
-              				Savatga qo'shish
-            				</Button>
-          				</div>
+
+						<div className={'button_box'}>
+							<Button
+								variant="contained"
+								style={{
+									width: '230px',
+									height: '44px',
+									borderRadius: '4px',
+									fontSize: '15px',
+								}}
+								// variant="contained"
+								onClick={() => {
+									props.onAdd(chosenProduct);
+								}}
+							>
+								Savatga qo'shish
+							</Button>
+						</div>
 					</Box>
 				</Stack>
 			</Container>
