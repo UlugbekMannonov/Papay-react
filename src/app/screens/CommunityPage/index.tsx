@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Container, Stack } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import "../../../css/community.css";
@@ -11,19 +11,77 @@ import TabPanel from "@material-ui/lab/TabPanel";
 import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import CommunityApiService from "../../apiServices/communityApiService";
+import { BoArticle, SearchArticlesObj } from "../../../types/boArticle";
+
+// REDUX
+import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setTargetBoArticles } from "./slice";
+import { retrieveTargetBoArticles } from "./selector";
+
+// REDUX SLICE
+const actionDispatch = (dispach: Dispatch) => ({
+  setTargetBoArticles: (data: BoArticle[]) =>
+    dispach(setTargetBoArticles(data)),
+});
+
+// REDUX SELECTOR
+const targetBoArticlesRetriever = createSelector(
+  retrieveTargetBoArticles,
+  (targetBoArticles) => ({
+    targetBoArticles,
+  })
+);
 
 const targetBoArticles = [1, 2, 3, 4, 5];
 
 export function CommunityPage(props: any) {
   /** INITIALIZATIONS **/
+  const { setTargetBoArticles } = actionDispatch(useDispatch());
+  const { targetBoArticles } = useSelector(targetBoArticlesRetriever);
   const [value, setValue] = React.useState("1");
+  const [searchArticleSObj, setSearchArticlesObj] = useState<SearchArticlesObj>(
+    {
+      bo_id: "all",
+      page: 1,
+      limit: 5,
+    }
+  );
+
+  useEffect(() => {
+    const communityService = new CommunityApiService();
+    communityService
+      .getTargetArticles(searchArticleSObj)
+      .then((data) => setTargetBoArticles(data))
+      .catch((err) => console.log(err));
+  }, [searchArticleSObj]);
 
   /** HANDLERS **/
   const handleChange = (event: any, newValue: string) => {
+    searchArticleSObj.page = 1;
+    switch (newValue) {
+      case "1":
+        searchArticleSObj.bo_id = "all";
+        break;
+      case "2":
+        searchArticleSObj.bo_id = "celebrity";
+        break;
+      case "3":
+        searchArticleSObj.bo_id = "evaluation";
+        break;
+      case "4":
+        searchArticleSObj.bo_id = "story";
+        break;
+    }
+    setSearchArticlesObj({ ...searchArticleSObj });
     setValue(newValue);
   };
+  
   const handlePaginationChange = (event: any, value: number) => {
-    console.log(value);
+    searchArticleSObj.page = value;
+    setSearchArticlesObj({ ...searchArticleSObj });
   };
 
   return (

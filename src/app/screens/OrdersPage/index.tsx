@@ -24,7 +24,6 @@ import OrderApiService from "../../apiServices/orderApiService";
 import { Member } from "../../../types/user";
 import { setFinishedOrders, setPausedOrders, setProcessOrders } from "./slice";
 
-
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
   setPausedOrders: (data: Order[]) => dispach(setPausedOrders(data)),
@@ -117,7 +116,7 @@ export function OrderPage(props: any) {
                   className={"order_user_avatar"}
                 />
                 <div className={"order_user_abs"}>
-                  <img src="/icons/User.svg" />
+                  <img src="" />
                 </div>
               </div>
               <span className={"order_user_name"}>
