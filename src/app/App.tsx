@@ -6,7 +6,7 @@ import '../css/footer.css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { RestaurantPage } from './screens/RestaurantPage';
 import { CommunityPage } from './screens/CommunityPage';
-import { OrdersPage } from './screens/OrdersPage';
+import { OrderPage } from './screens/OrdersPage';
 import { MemberPage } from './screens/MemberPage';
 import { HelpPage } from './screens/HelpPage';
 import { LoginPage } from './screens/LoginPage';
@@ -140,99 +140,100 @@ function App() {
 	};
 
 	return (
-		<Router>
-			{main_path == '/' ? (
-				<NavbarHome
-					setPath={setPath}
-					handleLoginOpen={handleLoginOpen}
-					handleSignUpOpen={handleSignUpOpen}
-					anchorEl={anchorEl}
-					open={open}
-					handleLogOutClick={handleLogOutClick}
-					handleCloseLogOut={handleCloseLogOut}
-					handleLogOutRequest={handleLogOutRequest}
-					verifiedMemberData={verifiedMemberData}
-					cartItems={cartItems}
-					onAdd={onAdd}
-					onRemove={onRemove}
-					onDelete={onDelete}
-					onDeleteAll={onDeleteAll}
-					setOrderRebuild={setOrderRebuild}
-				/>
-			) : main_path.includes('/restaurant') ? (
-				<NavbarRestaurant
-					setPath={setPath}
-					handleLoginOpen={handleLoginOpen}
-					handleSignUpOpen={handleSignUpOpen}
-					anchorEl={anchorEl}
-					open={open}
-					handleLogOutClick={handleLogOutClick}
-					handleCloseLogOut={handleCloseLogOut}
-					handleLogOutRequest={handleLogOutRequest}
-					verifiedMemberData={verifiedMemberData}
-					cartItems={cartItems}
-					onAdd={onAdd}
-					onRemove={onRemove}
-					onDelete={onDelete}
-					onDeleteAll={onDeleteAll}
-					setOrderRebuild={setOrderRebuild}
-				/>
-			) : (
-				<NavbarOthers
-					setPath={setPath}
-					handleLoginOpen={handleLoginOpen}
-					handleSignUpOpen={handleSignUpOpen}
-					anchorEl={anchorEl}
-					open={open}
-					handleLogOutClick={handleLogOutClick}
-					handleCloseLogOut={handleCloseLogOut}
-					handleLogOutRequest={handleLogOutRequest}
-					verifiedMemberData={verifiedMemberData}
-					cartItems={cartItems}
-					onAdd={onAdd}
-					onRemove={onRemove}
-					onDelete={onDelete}
-					onDeleteAll={onDeleteAll}
-					setOrderRebuild={setOrderRebuild}
-				/>
-			)}
+    <Router>
+      {main_path == "/" ? (
+        <NavbarHome
+          setPath={setPath}
+          handleLoginOpen={handleLoginOpen}
+          handleSignUpOpen={handleSignUpOpen}
+          anchorEl={anchorEl}
+          open={open}
+          handleLogOutClick={handleLogOutClick}
+          handleCloseLogOut={handleCloseLogOut}
+          handleLogOutRequest={handleLogOutRequest}
+          verifiedMemberData={verifiedMemberData}
+          cartItems={cartItems}
+          onAdd={onAdd}
+          onRemove={onRemove}
+          onDelete={onDelete}
+          onDeleteAll={onDeleteAll}
+          setOrderRebuild={setOrderRebuild}
+        />
+      ) : main_path.includes("/restaurant") ? (
+        <NavbarRestaurant
+          setPath={setPath}
+          handleLoginOpen={handleLoginOpen}
+          handleSignUpOpen={handleSignUpOpen}
+          anchorEl={anchorEl}
+          open={open}
+          handleLogOutClick={handleLogOutClick}
+          handleCloseLogOut={handleCloseLogOut}
+          handleLogOutRequest={handleLogOutRequest}
+          verifiedMemberData={verifiedMemberData}
+          cartItems={cartItems}
+          onAdd={onAdd}
+          onRemove={onRemove}
+          onDelete={onDelete}
+          onDeleteAll={onDeleteAll}
+          setOrderRebuild={setOrderRebuild}
+        />
+      ) : (
+        <NavbarOthers
+          setPath={setPath}
+          handleLoginOpen={handleLoginOpen}
+          handleSignUpOpen={handleSignUpOpen}
+          anchorEl={anchorEl}
+          open={open}
+          handleLogOutClick={handleLogOutClick}
+          handleCloseLogOut={handleCloseLogOut}
+          handleLogOutRequest={handleLogOutRequest}
+          verifiedMemberData={verifiedMemberData}
+          cartItems={cartItems}
+          onAdd={onAdd}
+          onRemove={onRemove}
+          onDelete={onDelete}
+          onDeleteAll={onDeleteAll}
+          setOrderRebuild={setOrderRebuild}
+        />
+      )}
 
-			<Switch>
-				<Route path="/restaurant">
-					<RestaurantPage onAdd={onAdd} />
-				</Route>
-				<Route path="/community">
-					<CommunityPage />
-				</Route>
-				<Route path="/orders">
-					<OrdersPage
-						orderRebuild={orderRebuild}
-						setOrderRebuild={setOrderRebuild}
-					/>
-				</Route>
-				<Route path="/member-page">
-					<MemberPage />
-				</Route>
-				<Route path="/help">
-					<HelpPage />
-				</Route>
-				<Route path="/login">
-					<LoginPage />
-				</Route>
-				<Route path="/">
-					<HomePage />
-				</Route>
-			</Switch>
-			<Footer />
-			<AuthenticationModal
-				loginOpen={loginOpen}
-				handleLoginOpen={handleLoginOpen}
-				handleLoginClose={handleLoginClose}
-				signUpOpen={signUpOpen}
-				handleSignUpOpen={handleSignUpOpen}
-				handleSignUpClose={handleSignUpClose}
-			/>
-		</Router>
-	);
+      <Switch>
+        <Route path="/restaurant">
+          <RestaurantPage onAdd={onAdd} />
+        </Route>
+        <Route path="/community">
+          <CommunityPage />
+        </Route>
+        <Route path="/orders">
+          <OrderPage
+            orderRebuild={orderRebuild}
+            setOrderRebuild={setOrderRebuild}
+            verifiedMemberData={verifiedMemberData}
+          />
+        </Route>
+        <Route path="/member-page">
+          <MemberPage />
+        </Route>
+        <Route path="/help">
+          <HelpPage />
+        </Route>
+        <Route path="/login">
+          <LoginPage />
+        </Route>
+        <Route path="/">
+          <HomePage />
+        </Route>
+      </Switch>
+      <Footer />
+      <AuthenticationModal
+        loginOpen={loginOpen}
+        handleLoginOpen={handleLoginOpen}
+        handleLoginClose={handleLoginClose}
+        signUpOpen={signUpOpen}
+        handleSignUpOpen={handleSignUpOpen}
+        handleSignUpClose={handleSignUpClose}
+      />
+    </Router>
+  );
 }
 export default App;

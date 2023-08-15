@@ -4,7 +4,7 @@ import { Member } from './user';
 export interface BoArticle {
 	art_subject: string;
 	art_content: string;
-	art_image: string;
+	art_image?: string | null;
 	bo_id: string;
 	art_status: string;
 	art_likes: number;

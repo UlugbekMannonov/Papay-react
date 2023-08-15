@@ -1,175 +1,205 @@
-import React, { useEffect, useState } from 'react';
-import { Container } from '@mui/system';
-import '../../../css/order.css';
-import { Box, Stack } from '@mui/material';
-import Tab from '@mui/material/Tab';
-import TabContext from '@material-ui/lab/TabContext';
-import TabList from '@material-ui/lab/TabList';
-import TabPanel from '@material-ui/lab/TabPanel';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-
-import { PausedOrders } from '../../components/orders/pausedOrders';
-import { ProcessOrders } from '../../components/orders/processOrders';
-import { FinishedOrders } from '../../components/orders/finishedOrders';
-import Marginer from '../../components/marginer';
+import React, { useEffect, useState } from "react";
+import { Container, Stack, Box } from "@mui/material";
+import "../../../css/order.css";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList/TabList";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import TextField from "@mui/material/TextField";
+import FinishedOrders from "../../components/orders/finishedOrders";
+import { PausedOrders } from "../../components/orders/pausedOrders";
+import { ProcessOrders } from "../../components/orders/processOrders";
+import Marginer from "../../components/marginer";
+import { Order } from "../../../types/order";
 
 // REDUX
-import { createSelector } from "reselect";
-import { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { Order } from "../../../types/order";
+import { Dispatch } from "@reduxjs/toolkit";
+// import {
+//   setPausedOrders,
+//   setProcessOrders,
+//   setFinishedOrders,
+// } from "../../screens/OrdersPage/slice";
+import OrderApiService from "../../apiServices/orderApiService";
+import { Member } from "../../../types/user";
 import { setFinishedOrders, setPausedOrders, setProcessOrders } from "./slice";
-import OrderApiService from '../../apiServices/orderApiService';
 
-/** REDUX SLICE **/
-const actionDispatch = (dispatch: Dispatch) => ({
-  setPausedOrders: (data: Order[]) => dispatch(setPausedOrders(data)),
-  setProcessOrders: (data: Order) => dispatch(setProcessOrders(data)),
-  setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
+
+/** REDUX SLICE */
+const actionDispatch = (dispach: Dispatch) => ({
+  setPausedOrders: (data: Order[]) => dispach(setPausedOrders(data)),
+  setProcessOrders: (data: Order[]) => dispach(setProcessOrders(data)),
+  setFinishedOrders: (data: Order[]) => dispach(setFinishedOrders(data)),
 });
 
-export function OrdersPage(props: any) {
-	/** INITIALIATIONS **/
-	const [value, setValue] = useState('1');
-	const { setPausedOrders, setProcessOrders, setFinishedOrders } =
-		actionDispatch(useDispatch());
+export function OrderPage(props: any) {
+  /* INITIALIZATIONS */
+  const [value, setValue] = useState("1");
+  const { setPausedOrders, setProcessOrders, setFinishedOrders } =
+    actionDispatch(useDispatch());
+  const verifieaMemberData: Member | null = props.verifieaMemberData;
 
-	useEffect(() => {
-		const orderService = new OrderApiService();
-		orderService
-			.getMyOrders('paused')
-			.then((data) => setPausedOrders(data))
-			.catch((err) => console.log(err));
-		orderService
-			.getMyOrders('process')
-			.then((data) => setProcessOrders(data))
-			.catch((err) => console.log(err));
-		orderService
-			.getMyOrders('finished')
-			.then((data) => setFinishedOrders(data))
-			.catch((err) => console.log(err));
-	}, [props.orderRebuild]);
+  useEffect(() => {
+    const orderService = new OrderApiService();
+    orderService
+      .getMyOrders("paused")
+      .then((data) => setPausedOrders(data))
+      .catch((err) => console.log(err));
+    orderService
+      .getMyOrders("process")
+      .then((data) => setProcessOrders(data))
+      .catch((err) => console.log(err));
+    orderService
+      .getMyOrders("finished")
+      .then((data) => setFinishedOrders(data))
+      .catch((err) => console.log(err));
+  }, [props.orderRebuild]);
 
-	/** HANDLERS **/
-	const handleChange = (event: any, newValue: string) => {
-		setValue(newValue);
-	};
-	return (
-		<div className={'order_page'}>
-			<Container
-				style={{ display: 'flex', flexDirection: 'row' }}
-				sx={{ mt: '50px', mb: '50px' }}
-			>
-				<Stack className={'order_left'}>
-					<TabContext value={value}>
-						<Box className={'order_nav_frame'}>
-							<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-								<TabList
-									TabIndicatorProps={{ style: { background: '#1976d2' } }}
-									onChange={handleChange}
-									value={value}
-									aria-label="basic tabs example"
-									style={{ display: 'flex', justifyContent: 'space-between' }}
-								>
-									<Tab
-										label="Buyurtmalarim"
-										value="1"
-										style={{ color: '#1976d2' }}
-									/>
-									<Tab label="Jarayon" value="2" style={{ color: '#1976d2' }} />
-									<Tab
-										label="Yakunlangan"
-										value="3"
-										style={{ color: '#1976d2' }}
-									/>
-								</TabList>
-							</Box>
-						</Box>
-						<Stack className={'order_main_content'}>
-							<PausedOrders setOrderRebuild={props.setOrderRebuild} />
-							<ProcessOrders setOrderRebuild={props.setOrderRebuild} />
-							<FinishedOrders setOrderRebuild={props.setOrderRebuild} />
-						</Stack>
-					</TabContext>
-				</Stack>
-				<Stack className={'order_right'}>
-					<Box className={'order_info_box'}>
-						<Box
-							style={{
-								display: 'flex',
-								flexDirection: 'column',
-								alignItems: 'center',
-								justifyContent: 'center',
-							}}
-						>
-							<div className={'order_user_img'}>
-								<img
-									className={'order_user_avatar'}
-									src={'/icons/profile.svg'}
-								/>
-								<div className={'order_user_icon_box'}>
-									<img src="/icons/user_icon.svg" />
-								</div>
-							</div>
-							<span className={'order_user_name'}>STAS</span>
-							<span className={'order_user_prof'}>Foydalanuvchi</span>
-						</Box>
-						<div
-							style={{
-								border: `1px solid rgb(161, 161, 161)`,
-								marginTop: '40px',
-								width: '100%',
-							}}
-						></div>
-						<Box className={'order_user_address'}>
-							<div style={{ display: 'flex' }}>
-								<LocationOnIcon />
-							</div>
-							<div className={'spec_address_txt'}>Tashkent, Yunus Abad 4</div>
-						</Box>
-					</Box>
-					<Box className={'order_info_box'} marginTop={'15px'}>
-						<input
-							type={'text'}
-							name={'card_number'}
-							placeholder={'Card number: 5243 4090 2002 7495'}
-							className={'card_input'}
-						/>
-						<div
-							style={{
-								display: 'flex',
-								flexDirection: 'row',
-								justifyContent: 'space-between',
-							}}
-						>
-							<input
-								type={'text'}
-								name={'card_period'}
-								placeholder={'07 / 24'}
-								className={'card_half_input'}
-							/>
-							<input
-								type={'text'}
-								name={'card_cvv'}
-								placeholder={'CVV: 010'}
-								className={'card_half_input'}
-							/>
-						</div>
-						<input
-							type={'text'}
-							name={'card_creator'}
-							placeholder={'ULUGBEK MANNONOV'}
-							className={'card_input'}
-						/>
-						<div className={'cards_box'}>
-							<img src="/icons/western.svg" />
-							<img src="/icons/master.svg" />
-							<img src="/icons/paypal.svg" />
-							<img src="/icons/visa.svg" />
-						</div>
-					</Box>
-				</Stack>
-			</Container>
-		</div>
-	);
+  /* HANDLERS */
+  const handleChange = (event: any, newValue: string) => {
+    setValue(newValue);
+  };
+
+  return (
+    <div className={"order_page"}>
+      <Container
+        maxWidth="lg"
+        style={{ display: "flex", flexDirection: "row" }}
+        sx={{ mt: "50px", mb: "50px" }}
+      >
+        <Stack className={"order_left"}>
+          <TabContext value={value}>
+            <Box className={"order_nav_frame"}>
+              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                <TabList
+                  onChange={handleChange}
+                  value={value}
+                  aria-label="basic tabs example"
+                >
+                  <Tab label="Buyurtmalarim" value={"1"} />
+                  <Tab
+                    label="Jarayon"
+                    value={"2"}
+                    style={{ marginLeft: "100px", marginRight: "100px" }}
+                  />
+                  <Tab label="Yakunlangan" value={"3"} />
+                </TabList>
+              </Box>
+            </Box>
+            <Marginer direction="horizontal" height="1" width="1" bg="white" />
+            <Stack className={"order_main_content"}>
+              <PausedOrders setOrderRebuild={props.setOrderRebuild} />
+              <ProcessOrders setOrderRebuild={props.setOrderRebuild} />
+              <FinishedOrders setOrderRebuild={props.setOrderRebuild} />
+            </Stack>
+          </TabContext>
+        </Stack>
+        <Stack className={"order_right"}>
+          <Box className={"order_info_box"}>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+              rowGap={"10px"}
+            >
+              <div className={"order_user_img"}>
+                <img
+                  src={
+                    verifieaMemberData?.mb_image
+                      ? verifieaMemberData?.mb_image
+                      : "/auth/default_user.svg"
+                  }
+                  style={{
+                    width: "117px",
+                    height: "112px",
+                    borderRadius: "37px",
+                  }}
+                  className={"order_user_avatar"}
+                />
+                <div className={"order_user_abs"}>
+                  <img src="/icons/User.svg" />
+                </div>
+              </div>
+              <span className={"order_user_name"}>
+                {verifieaMemberData?.mb_nick}
+              </span>
+              <span className="order_user_nick">
+                {verifieaMemberData?.mb_type ?? "Foydalanuvchi"}
+              </span>
+            </Box>
+            <Box display={"flex"} flexDirection={"column"} sx={{ mt: "40px" }}>
+              <Marginer
+                direction="horizontal"
+                height="2"
+                width="333"
+                bg="#A1A1A1"
+              />
+              <Box className={"order_user_location"}>
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <LocationOnIcon />
+                  <div style={{ color: "#a1a1a1" }}>
+                    {verifieaMemberData?.mb_address ?? "manzil kiritilmagan"}
+                  </div>
+                </div>
+              </Box>
+            </Box>
+          </Box>
+
+          <Box className={"order_info_box_2"}>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+              className={"box_2_start"}
+            >
+              <TextField
+                label="Card number : 5243 4090 2002 7495"
+                variant="outlined"
+                type="number"
+                className="input_user input_color"
+                style={{ backgroundColor: "#F5F5F5" }}
+              />
+              <Box display={"flex"} className={"input_user"}>
+                <TextField
+                  label="07 / 24"
+                  variant="outlined"
+                  type="number"
+                  style={{ backgroundColor: "#F5F5F5" }}
+                />
+                <TextField
+                  label="CVV : 010"
+                  variant="outlined"
+                  type="number"
+                  style={{ backgroundColor: "#F5F5F5" }}
+                />
+              </Box>
+              <TextField
+                className="input_user input_color"
+                label="Username"
+                variant="outlined"
+                style={{ backgroundColor: "#F5F5F5" }}
+              />
+            </Box>
+
+            <Box sx={{ mt: "20px" }}>
+              <Box display={"flex"} alignItems={"center"} columnGap={"20px"}>
+                <div>
+                  <img src="/icons/Western_union.svg" />
+                </div>
+                <div>
+                  <img src="/icons/mastercart.svg" />
+                </div>
+                <div>
+                  <img src="/icons/Paypal.svg" />
+                </div>
+                <div>
+                  <img src="/icons/visa.svg" />
+                </div>
+              </Box>
+            </Box>
+          </Box>
+        </Stack>
+      </Container>
+    </div>
+  );
 }
