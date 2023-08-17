@@ -28,7 +28,7 @@ import { CartItem } from "../types/others";
 import { Product } from "../types/product";
 function App() {
   /** INITIALIZATIONS */
-  const [verifieaMemberData, setVerifieaMemberData] = useState<Member | null>(
+  const [verifiedMemberData, setVerifiedMemberData] = useState<Member | null>(
     null
   );
   const [path, setPath] = useState();
@@ -52,7 +52,7 @@ function App() {
       member_data.mb_image = member_data.mb_image
         ? `${serverApi}/${member_data.mb_image}`
         : "/auth/default_user.svg";
-      setVerifieaMemberData(member_data);
+      setVerifiedMemberData(member_data);
     }
   }, [signUpOpen, loginOpen]);
   /** HANDLERS */
@@ -145,7 +145,7 @@ function App() {
           handleLogOutClick={handleLogOutClick}
           handleCloseLogOut={handleCloseLogOut}
           handleLogOutRequest={handleLogOutRequest}
-          verifieaMemberData={verifieaMemberData}
+          verifiedMemberData={verifiedMemberData}
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
@@ -163,7 +163,7 @@ function App() {
           handleLogOutClick={handleLogOutClick}
           handleCloseLogOut={handleCloseLogOut}
           handleLogOutRequest={handleLogOutRequest}
-          verifieaMemberData={verifieaMemberData}
+          verifiedMemberData={verifiedMemberData}
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
@@ -181,7 +181,7 @@ function App() {
           handleLogOutClick={handleLogOutClick}
           handleCloseLogOut={handleCloseLogOut}
           handleLogOutRequest={handleLogOutRequest}
-          verifieaMemberData={verifieaMemberData}
+          verifiedMemberData={verifiedMemberData}
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
@@ -202,11 +202,11 @@ function App() {
           <OrderPage
             orderRebuild={orderRebuild}
             setOrderRebuild={setOrderRebuild}
-            verifieaMemberData={verifieaMemberData}
+            verifiedMemberData={verifiedMemberData}
           />
         </Route>
         <Route path="/member-page">
-          <MemberPage />
+          <MemberPage verifiedMemberData={verifiedMemberData} />
         </Route>
         <Route path="/help">
           <HelpPage />

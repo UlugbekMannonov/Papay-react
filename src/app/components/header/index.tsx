@@ -42,7 +42,7 @@ export function NavbarHome(props: any) {
                 Oshhona
               </NavLink>
             </Box>
-            {props.verifieaMemberData ? (
+            {props.verifiedMemberData ? (
               <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/orders" activeClassName="underline">
                   Buyurtma
@@ -54,7 +54,7 @@ export function NavbarHome(props: any) {
                 Jamiyat
               </NavLink>
             </Box>
-            {props.verifieaMemberData ? (
+            {props.verifiedMemberData ? (
               <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/member-page" activeClassName="underline">
                   Sahifam
@@ -75,7 +75,7 @@ export function NavbarHome(props: any) {
               setOrderRebuild={props.setOrderRebuild}
             />
 
-            {!props.verifieaMemberData ? (
+            {!props.verifiedMemberData ? (
               <Box>
                 <Button
                   variant="contained"
@@ -88,7 +88,7 @@ export function NavbarHome(props: any) {
             ) : (
               <img
                 style={{ width: "48px", height: "48px", borderRadius: "24px" }}
-                src={props.verifieaMemberData.mb_image}
+                src={props.verifiedMemberData.mb_image}
                 onClick={props.handleLogOutClick}
               />
             )}
@@ -148,7 +148,7 @@ export function NavbarHome(props: any) {
             </Box>
             <Box className="timeline_service">24 soat xizmatingizdamiz.</Box>
             <Box sx={{ mt: "90px" }}>
-              {!props.verifieaMemberData ? (
+              {!props.verifiedMemberData ? (
                 <Button
                   className="blue-btn"
                   variant="contained"

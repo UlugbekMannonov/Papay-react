@@ -39,7 +39,7 @@ export function NavbarOthers(props: any) {
                 Oshhona
               </NavLink>
             </Box>
-            {props.verifieaMemberData ? (
+            {props.verifiedMemberData ? (
               <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/orders" activeClassName="underline">
                   Buyurtma
@@ -51,7 +51,7 @@ export function NavbarOthers(props: any) {
                 Jamiyat
               </NavLink>
             </Box>
-            {props.verifieaMemberData ? (
+            {props.verifiedMemberData ? (
               <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/member-page" activeClassName="underline">
                   Sahifam
@@ -72,7 +72,7 @@ export function NavbarOthers(props: any) {
               setOrderRebuild={props.setOrderRebuild}
             />
 
-            {!props.verifieaMemberData ? (
+            {!props.verifiedMemberData ? (
               <Box>
                 <Button
                   variant="contained"
@@ -85,7 +85,7 @@ export function NavbarOthers(props: any) {
             ) : (
               <img
                 style={{ width: "48px", height: "48px", borderRadius: "24px" }}
-                src={props.verifieaMemberData.mb_image}
+                src={props.verifiedMemberData.mb_image}
                 onClick={props.handleLogOutClick}
               />
             )}

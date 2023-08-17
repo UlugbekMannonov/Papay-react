@@ -35,7 +35,7 @@ export function OrderPage(props: any) {
   const [value, setValue] = useState("1");
   const { setPausedOrders, setProcessOrders, setFinishedOrders } =
     actionDispatch(useDispatch());
-  const verifieaMemberData: Member | null = props.verifieaMemberData;
+  const verifiedMemberData: Member | null = props.verifiedMemberData;
 
   useEffect(() => {
     const orderService = new OrderApiService();
@@ -104,8 +104,8 @@ export function OrderPage(props: any) {
               <div className={"order_user_img"}>
                 <img
                   src={
-                    verifieaMemberData?.mb_image
-                      ? verifieaMemberData?.mb_image
+                    verifiedMemberData?.mb_image
+                      ? verifiedMemberData?.mb_image
                       : "/auth/default_user.svg"
                   }
                   style={{
@@ -120,10 +120,10 @@ export function OrderPage(props: any) {
                 </div>
               </div>
               <span className={"order_user_name"}>
-                {verifieaMemberData?.mb_nick}
+                {verifiedMemberData?.mb_nick}
               </span>
               <span className="order_user_nick">
-                {verifieaMemberData?.mb_type ?? "Foydalanuvchi"}
+                {verifiedMemberData?.mb_type ?? "Foydalanuvchi"}
               </span>
             </Box>
             <Box display={"flex"} flexDirection={"column"} sx={{ mt: "40px" }}>
@@ -137,7 +137,7 @@ export function OrderPage(props: any) {
                 <div style={{ display: "flex", gap: "10px" }}>
                   <LocationOnIcon />
                   <div style={{ color: "#a1a1a1" }}>
-                    {verifieaMemberData?.mb_address ?? "manzil kiritilmagan"}
+                    {verifiedMemberData?.mb_address ?? "manzil kiritilmagan"}
                   </div>
                 </div>
               </Box>

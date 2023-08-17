@@ -1,33 +1,76 @@
-import React, { useState } from "react";
-import { Box, Button, Container, Link, Stack } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import React, { useEffect, useState } from "react";
+import { Box, Stack } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+// REDUX
+import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setMemberFollowings } from "./slice";
+import { retrieveMemberFollowings } from "./selector";
+import { Follower, Following } from "../../../types/follow";
+
+/** REDUX SLICE */
+const actionDispatch = (dispach: Dispatch) => ({
+  setMemberFollowings: (data: Following[]) =>
+    dispach(setMemberFollowings(data)),
+});
+
+/** REDUX SELECTOR */
+const memberFollowingsRetriever = createSelector(
+  retrieveMemberFollowings,
+  (memberFollowings) => ({
+    memberFollowings,
+  })
+);
+
+const followings = [
+  { mb_nick: "dean" },
+  { mb_nick: "justin" },
+  { mb_nick: "jason" },
+];
 
 export function MemberFollowing(props: any) {
+  /** INITIALIZATIONS */
+  const { setMemberFollowings } = actionDispatch(useDispatch());
+  const { memberFollowings } = useSelector(memberFollowingsRetriever);
   return (
     <Stack>
-      <Stack className={"following_list"}>
-        <div className={"member_img"}>
-          <img className={"member_avatar"} src={"/icons/profile.svg"} />
-        </div>
-        <Box
-          style={{
-            marginLeft: "25px",
-            width: "400px",
-            height: "50px",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <span className={"mb_username"}>Justin</span>
-          <span className={"mb_name"}>STAS</span>
-        </Box>
-        <Button 
-        variant="contained"
-        className={"unfollow_btn"}>
-          Unfollow
-        </Button>
-      </Stack>
+      {followings.map((following) => {
+        const image_url = "/auth/default_user_1.png";
+        return (
+          <Box className="follow_box">
+            <Avatar alt="" src={image_url} sx={{ width: 99, height: 99 }} />
+            <div
+              style={{
+                width: "400px",
+                display: "flex",
+                flexDirection: "column",
+                marginLeft: "25px",
+                height: "85%",
+                justifyContent: "center",
+              }}
+            >
+              <span className="username_text">USER</span>
+              <span className="name_text">{following.mb_nick}</span>
+            </div>
+            {props.actions_enabled && (
+              <Button
+                variant="contained"
+                startIcon={
+                  <img
+                    src="/icons/follow_icon.svg"
+                    style={{ width: "40px", marginLeft: "16px" }}
+                  />
+                }
+                className={"follow_cancel_btn"}
+              >
+                Bekor Qilish
+              </Button>
+            )}
+          </Box>
+        );
+      })}
     </Stack>
   );
 }

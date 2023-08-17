@@ -2,6 +2,26 @@ import React, { useState } from "react";
 import { Box, Button, Container, Link, Stack } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+// REDUX
+import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setMemberFollowers } from "./slice";
+import { retrieveMemberFollowers } from "./selector";
+import { Follower } from "../../../types/follow";
+
+/** REDUX SLICE */
+const actionDispatch = (dispach: Dispatch) => ({
+  setMemberFollowers: (data: Follower[]) => dispach(setMemberFollowers(data)),
+});
+
+/** REDUX SELECTOR */
+const memberFollowersRetriever = createSelector(
+  retrieveMemberFollowers,
+  (memberFollowers) => ({
+    memberFollowers,
+  })
+);
 
 // const followers = [
 //   {mb_nick: "Botir", following: true},
@@ -10,6 +30,10 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 // ];
 
 export function MemberFollowers(props: any) {
+  /** INITIALIZATIONS */
+  const { setMemberFollowers } = actionDispatch(useDispatch());
+  const { memberFollowers } = useSelector(memberFollowersRetriever);
+  
   return (
     <Stack>
       <Stack className={"following_list"}>
