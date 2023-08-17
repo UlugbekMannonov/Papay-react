@@ -84,7 +84,7 @@ class MemberAipService {
   public async getChosenMember(id: string) {
     try {
       const url = `/member/${id}`,
-        result = await axios.post(this.path + url, {
+        result = await axios.get(this.path + url, {
           withCredentials: true,
         });
 

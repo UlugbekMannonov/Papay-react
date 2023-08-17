@@ -21,7 +21,7 @@ import { createSelector } from "reselect";
 import { Dispatch } from "@reduxjs/toolkit";
 import {
   setChosenMember,
-  setchosenMemberBoArticles,
+  setChosenMemberBoArticles,
   setChosenSingleBoArticle,
 } from "./slice";
 import {
@@ -34,7 +34,7 @@ import {
 const actionDispatch = (dispach: Dispatch) => ({
   setChosenMember: (data: Member) => dispach(setChosenMember(data)),
   setchosenMemberBoArticles: (data: BoArticle[]) =>
-    dispach(setchosenMemberBoArticles(data)),
+    dispach(setChosenMemberBoArticles(data)),
   setChosenSingleBoArticle: (data: BoArticle) =>
     dispach(setChosenSingleBoArticle(data)),
 });

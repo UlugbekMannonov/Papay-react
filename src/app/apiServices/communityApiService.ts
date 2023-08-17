@@ -57,7 +57,7 @@ class CommunityApiService {
 
   public async getChosenArticles(art_id: string) {
     try {
-      let url = `/community/single-article/:art_id${art_id}`;
+      let url = `/community/single-article/${art_id}`;
 
       const result = await axios.get(this.path + url, {
         withCredentials: true,

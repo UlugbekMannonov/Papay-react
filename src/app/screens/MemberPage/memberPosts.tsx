@@ -20,6 +20,7 @@ export function MemberPosts(props: any) {
     chosenMemberBoArticles,
     renderChosenArticleHandler,
     setArticlesRebuild,
+    chosenSingleBoArticle,
   } = props;
 
   /** HANDLERS */
@@ -52,6 +53,7 @@ export function MemberPosts(props: any) {
 
         return (
           <Box className="all_article_box" sx={{ cursor: "pointer" }}>
+            <div onClick={() => renderChosenArticleHandler(article?._id)} className="all_article_box">
             <Box
               className="all_article_img"
               sx={{
@@ -121,6 +123,7 @@ export function MemberPosts(props: any) {
                 </Box>
               </Box>
             </Box>
+            </div>
           </Box>
         );
       })}

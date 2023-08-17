@@ -28,7 +28,7 @@ import { createSelector } from "reselect";
 import { Dispatch } from "@reduxjs/toolkit";
 import {
   setChosenMember,
-  setchosenMemberBoArticles,
+  setChosenMemberBoArticles,
   setChosenSingleBoArticle,
 } from "./slice";
 import {
@@ -47,7 +47,7 @@ import MemberApiService from "../../apiServices/memberApiService";
 const actionDispatch = (dispach: Dispatch) => ({
   setChosenMember: (data: Member) => dispach(setChosenMember(data)),
   setchosenMemberBoArticles: (data: BoArticle[]) =>
-    dispach(setchosenMemberBoArticles(data)),
+    dispach(setChosenMemberBoArticles(data)),
   setChosenSingleBoArticle: (data: BoArticle) =>
     dispach(setChosenSingleBoArticle(data)),
 });
@@ -91,7 +91,7 @@ export function VisitMyPage(props: any) {
     useState<SearchMemberArticlesObj>({ mb_id: "none", page: 1, limit: 5 });
 
   useEffect(() => {
-    if (!localStorage.getItem("member_data")) {
+    if (!verifiedMemberData("member_data")) {
       sweetFailureProvider("Please login first", true, true);
     }
 
@@ -121,7 +121,10 @@ export function VisitMyPage(props: any) {
       const communityService = new CommunityApiService();
       communityService
         .getChosenArticles(art_id)
-        .then((data) => setChosenSingleBoArticle(data))
+        .then((data) => {
+          setChosenSingleBoArticle(data);
+          setValue("5");
+        })
         .catch((err) => console.log(err));
     } catch (err: any) {
       console.log(err);
@@ -151,8 +154,8 @@ export function VisitMyPage(props: any) {
                     >
                       <Box className={"bottom_box"}>
                         <Pagination
-                          count={3}
-                          page={1}
+                          count={memberArticleSearchObj.limit}
+                          page={memberArticleSearchObj.page}
                           renderItem={(item) => (
                             <PaginationItem
                               components={{
@@ -192,7 +195,10 @@ export function VisitMyPage(props: any) {
                 <TabPanel value={"5"}>
                   <Box className={"menu_name"}>Tanlangan Maqola</Box>
                   <Box className={"menu_content"}>
-                    <TViewer text={`<h3>Hello</h3>`} />
+                    <TViewer
+                      renderChosenArticleHandler={renderChosenArticleHandler}
+                      chosenSingleBoArticle={chosenSingleBoArticle}
+                    />
                   </Box>
                 </TabPanel>
 
