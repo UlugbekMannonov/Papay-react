@@ -6,23 +6,22 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList/TabList";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import TextField from "@mui/material/TextField";
+import PausedOrders from "../../components/orders/pausedOrders";
+import ProcessOrders from "../../components/orders/processOrders";
 import FinishedOrders from "../../components/orders/finishedOrders";
-import { PausedOrders } from "../../components/orders/pausedOrders";
-import { ProcessOrders } from "../../components/orders/processOrders";
 import Marginer from "../../components/marginer";
 import { Order } from "../../../types/order";
 
 // REDUX
 import { useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
-// import {
-//   setPausedOrders,
-//   setProcessOrders,
-//   setFinishedOrders,
-// } from "../../screens/OrdersPage/slice";
+import {
+  setPausedOrders,
+  setProcessOrders,
+  setFinishedOrders,
+} from "../../screens/OrdersPage/slice";
 import OrderApiService from "../../apiServices/orderApiService";
 import { Member } from "../../../types/user";
-import { setFinishedOrders, setPausedOrders, setProcessOrders } from "./slice";
 
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -41,15 +40,15 @@ export function OrderPage(props: any) {
   useEffect(() => {
     const orderService = new OrderApiService();
     orderService
-      .getMyOrders("paused")
+      .getMyOrder("paused")
       .then((data) => setPausedOrders(data))
       .catch((err) => console.log(err));
     orderService
-      .getMyOrders("process")
+      .getMyOrder("process")
       .then((data) => setProcessOrders(data))
       .catch((err) => console.log(err));
     orderService
-      .getMyOrders("finished")
+      .getMyOrder("finished")
       .then((data) => setFinishedOrders(data))
       .catch((err) => console.log(err));
   }, [props.orderRebuild]);
@@ -93,6 +92,7 @@ export function OrderPage(props: any) {
             </Stack>
           </TabContext>
         </Stack>
+
         <Stack className={"order_right"}>
           <Box className={"order_info_box"}>
             <Box
@@ -116,7 +116,7 @@ export function OrderPage(props: any) {
                   className={"order_user_avatar"}
                 />
                 <div className={"order_user_abs"}>
-                  <img src="" />
+                  <img src="/icons/User.svg" />
                 </div>
               </div>
               <span className={"order_user_name"}>
@@ -182,7 +182,7 @@ export function OrderPage(props: any) {
 
             <Box sx={{ mt: "20px" }}>
               <Box display={"flex"} alignItems={"center"} columnGap={"20px"}>
-                <div>
+                {/* <div>
                   <img src="/icons/Western_union.svg" />
                 </div>
                 <div>
@@ -193,7 +193,7 @@ export function OrderPage(props: any) {
                 </div>
                 <div>
                   <img src="/icons/visa.svg" />
-                </div>
+                </div> */}
               </Box>
             </Box>
           </Box>

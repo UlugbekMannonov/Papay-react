@@ -1,12 +1,11 @@
 import { serverApi } from "../../lib/config";
-import { Definer } from "../../lib/Definer";
 import axios from "axios";
 import assert from "assert";
+import { Definer } from "../../lib/Definer";
 import { BoArticle, SearchArticlesObj } from "../../types/boArticle";
 
 class CommunityApiService {
   private readonly path: string;
-
   constructor() {
     this.path = serverApi;
   }
@@ -19,6 +18,7 @@ class CommunityApiService {
       const result = await axios.get(this.path + url, {
         withCredentials: true,
       });
+
       assert.ok(result?.data, Definer.general_err1);
       assert.ok(result?.data?.state != "fail", result?.data?.message);
       console.log("state:", result.data.state);
@@ -26,7 +26,7 @@ class CommunityApiService {
       const articles: BoArticle[] = result.data.data;
       return articles;
     } catch (err: any) {
-      console.log(`ERROR ::: getTargetArticles ${err.message}`);
+      console.log(`ERROR ::: getTargetArticles, ${err.message}`);
       throw err;
     }
   }

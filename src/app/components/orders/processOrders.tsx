@@ -1,13 +1,14 @@
-import TabPanel from "@mui/lab/TabPanel";
-import { Box, Button, Stack } from "@mui/material";
 import React from "react";
-import { format } from "date-fns";
-
-// REDUX
-import { createSelector } from "reselect";
-import { useSelector } from "react-redux";
-import { retrieveProcessOrders } from "../../screens/OrdersPage/selector";
+import { Box, Stack } from "@mui/material";
+import Button from "@mui/material/Button";
+import TabPanel from "@mui/lab/TabPanel";
+import moment from "moment";
+import Marginer from "../marginer";
 import { Order } from "../../../types/order";
+// REDUX
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { retrieveProcessOrders } from "../../screens/OrdersPage/selector";
 import { Product } from "../../../types/product";
 import { serverApi } from "../../../lib/config";
 import {
@@ -15,9 +16,8 @@ import {
   sweetFailureProvider,
 } from "../../../lib/sweetAlert";
 import OrderApiService from "../../apiServices/orderApiService";
-// import {PausedOrders}  from './pausedOrders';
 
-/** REDUX SELECTOR **/
+/** REDUX SELECTOR */
 const processOrdersRetriever = createSelector(
   retrieveProcessOrders,
   (processOrders) => ({
@@ -25,20 +25,17 @@ const processOrdersRetriever = createSelector(
   })
 );
 
-const currentDate = new Date();
-const time = format(currentDate, "yyyy-MM-dd HH:mm:ss");
-
-export function ProcessOrders(props: any) {
-  /** INITIALIZATIONS **/
+export default function ProcessOrders(props: any) {
+  /** INITIALIZATIONS */
   const { processOrders } = useSelector(processOrdersRetriever);
-  /** HANDLERS **/
+
+  /* HANDLERS */
   const finishOrderHandler = async (event: any) => {
     try {
       const order_id = event.target.value;
       const data = { order_id: order_id, order_status: "FINISHED" };
-
       if (!localStorage.getItem("member_data")) {
-        sweetFailureProvider("Please login first!", true);
+        sweetFailureProvider("Please login first", true);
       }
 
       let confirmation = window.confirm(
@@ -47,64 +44,91 @@ export function ProcessOrders(props: any) {
       if (confirmation) {
         const orderService = new OrderApiService();
         await orderService.updateOrderStatus(data);
-        //refresh builderlogic
         props.setOrderRebuild(new Date());
       }
     } catch (err) {
-      console.log(`finishOrderHandler, ERROR: `, err);
+      console.log("finishOrderHandler, ERROR: ", err);
       sweetErrorHandling(err).then();
     }
   };
 
   return (
-    <TabPanel value="2">
+    <TabPanel value={"2"}>
       <Stack>
         {processOrders?.map((order: Order) => {
           return (
             <Box className="order_main_box">
               <Box className="order_box_scroll">
-                {order.order_items.map((item) => {
-                  const product: Product = order.product_data.filter(
-                    (ele) => ele._id === item.product_id
-                  )[0];
-                  const image_path = `${serverApi}/${product.product_images[0]}`;
-                  return (
-                    <Box className="orderName_price">
-                      <img src={image_path} alt="" className="orderDishImg" />
-                      <p className="titleDish">{product.product_name}</p>
-                      <Box className="priceBox">
-                        <p>${item.item_price}</p>
-                        <img src={"/icons/close.svg"} alt="" />
-                        <p>{item.item_quantity}</p>
-                        <img src={"/icons/pause.svg"} alt="" />
-                        <p>${item.item_price * item.item_quantity}</p>
+                <Box>
+                  {order.order_items.map((item) => {
+                    const product: Product = order.product_data.filter(
+                      (ele) => ele._id === item.product_id
+                    )[0];
+                    const image_path = `${serverApi}/${product?.product_images[0].replace(
+                      /\\/g,
+                      "/"
+                    )}`;
+                    return (
+                      <Box className={"ordersName_price"}>
+                        <img src={image_path} className={"orderDishing"} />
+                        <p className="titleDish">{product?.product_name}</p>
+                        <Box className={"priceBox"}>
+                          <p>${item.item_price}</p>
+                          <img src="/icons/Close.svg" />
+                          <p>{item.item_quantity}</p>
+                          <img src="/icons/pause.svg" />
+                          <p>${item.item_price * item.item_quantity}</p>
+                        </Box>
                       </Box>
-                    </Box>
-                  );
-                })}
+                    );
+                  })}
+                </Box>
               </Box>
-              <Box
-                className="total_price_box black_solid"
-                style={{ background: "#8C66F2CF" }}
-              >
+
+              <Box className="total_price_box MediumPurple_solid">
                 <Box className="boxTotal">
                   <p>Mahsulot Narxi</p>
                   <p>${order.order_total_amount - order.order_delivery_cost}</p>
-                  <img src={`/icons/plus.svg`} alt="" />
+                  <img
+                    src="/icons/plus.svg"
+                    style={{ marginLeft: "10px", marginRight: "10px" }}
+                  />
                   <p>Yetkazish Xizmati</p>
                   <p>${order.order_delivery_cost}</p>
-                  <img src={"/icons/pause.svg"} alt="" />
+                  <img
+                    src="/icons/pause.svg"
+                    style={{ marginLeft: "10px", marginRight: "10px" }}
+                  />
                   <p>Jami Narx</p>
                   <p>${order.order_total_amount}</p>
-                  <p>{time}</p>
-                  <Button
-                    value={order._id}
-                    onClick={finishOrderHandler}
-                    variant="contained"
-                    style={{ width: "126px", height: "36px", fontSize: "12px" }}
-                  >
-                    Yakunlash
-                  </Button>
+                  <Box>
+                    <Marginer
+                      direction="vertical"
+                      height="25"
+                      width="2"
+                      bg="red"
+                    />
+                  </Box>
+                  <Box>
+                    <p>{moment(order.createdAt).format("YYYY-MM-DD HH:mm")} </p>
+                  </Box>
+                  <Box>
+                    <Marginer
+                      direction="vertical"
+                      height="25"
+                      width="2"
+                      bg="red"
+                    />
+                  </Box>
+                  <Box>
+                    <Button
+                      value={order._id}
+                      onClick={finishOrderHandler}
+                      variant="contained"
+                    >
+                      Yakunlash
+                    </Button>
+                  </Box>
                 </Box>
               </Box>
             </Box>
@@ -113,7 +137,4 @@ export function ProcessOrders(props: any) {
       </Stack>
     </TabPanel>
   );
-}
-function moment() {
-  throw new Error("Function not implemented.");
 }

@@ -54,19 +54,19 @@ export default function FinishedOrders(props: any) {
 
               <Box className="total_price_box red_solid">
                 <Box className={"boxTotal"}>
-                  <p>mahsulot narxi</p>
+                  <p>Mahsulot Narxi</p>
                   <p>${order.order_total_amount - order.order_delivery_cost}</p>
                   <img
                     src="/icons/plus.svg"
                     style={{ marginLeft: "10px", marginRight: "10px" }}
                   />
-                  <p>yetgazish xizmati</p>
+                  <p>Yetkazish Xizmati</p>
                   <p>${order.order_delivery_cost}</p>
                   <img
                     src="/icons/pause.svg"
                     style={{ marginLeft: "10px", marginRight: "10px" }}
                   />
-                  <p>jami narx</p>
+                  <p>Jami Narx</p>
                   <p>${order.order_total_amount}</p>
                 </Box>
               </Box>

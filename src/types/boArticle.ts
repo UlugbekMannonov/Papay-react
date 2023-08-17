@@ -1,7 +1,8 @@
-import { MeLiked } from './product';
-import { Member } from './user';
+import { MeLiked } from "./product";
+import { Member } from "./user";
 
 export interface BoArticle {
+  _id: string;
   art_subject: string;
   art_content: string;
   art_image?: string | null;
@@ -22,3 +23,4 @@ export interface SearchArticlesObj {
   bo_id: string;
   order?: number | null;
 }
+

@@ -1,18 +1,17 @@
 import { BoArticle } from "./boArticle";
 import { Order } from "./order";
 import { Product } from "./product";
-import { Restaurant } from "./user";
+import { Member, Restaurant } from "./user";
 
 /** REACT APP STATE */
 export interface AppRootState {
-  // restaurantPage: any;
   homePage: HomePageState;
   restaurantPage: RestaurantPageState;
   ordersPage: OrdersPageState;
   communityPage: CommunityPageState;
 }
 
-/** HANDLERS */
+/** HOMEPAGE */
 export interface HomePageState {
   topRestaurants: Restaurant[];
   bestRestaurants: Restaurant[];
@@ -31,14 +30,14 @@ export interface RestaurantPageState {
   chosenProduct: Product | null;
 }
 
-//** ORDERS PAGE */
+/** ORDERS PAGE */
 export interface OrdersPageState {
   pausedOrders: Order[];
   processOrders: Order[];
   finishedOrders: Order[];
 }
 
-/** COMMUNITY PAGE **/
+/** COMMUNITY PAGE */
 export interface CommunityPageState {
   targetBoArticles: BoArticle[];
 }
