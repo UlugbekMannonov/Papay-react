@@ -42,6 +42,7 @@ import {
 } from "../../../lib/sweetAlert";
 import CommunityApiService from "../../apiServices/communityApiService";
 import MemberApiService from "../../apiServices/memberApiService";
+import { verifiedMemberData } from "../../apiServices/verify";
 
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -87,11 +88,12 @@ export function VisitMyPage(props: any) {
   const { chosenSingleBoArticle } = useSelector(chosenSingleBoArticleRetriever);
   const [value, setValue] = useState("1");
   const [articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
+  const [followRebuild, setFollowRebuild] = useState<boolean>(false);
   const [memberArticleSearchObj, setMemberArticleSearchObj] =
     useState<SearchMemberArticlesObj>({ mb_id: "none", page: 1, limit: 5 });
 
   useEffect(() => {
-    if (!verifiedMemberData("member_data")) {
+    if (!verifiedMemberData) {
       sweetFailureProvider("Please login first", true, true);
     }
 
@@ -105,7 +107,8 @@ export function VisitMyPage(props: any) {
       .getChosenMember(verifiedMemberData?._id)
       .then((data) => setChosenMember(data))
       .catch((err) => console.log(err));
-  }, [memberArticleSearchObj, articlesRebuild]);
+}, [memberArticleSearchObj, articlesRebuild, followRebuild]);
+  
   /** HANDLERS **/
   const handleChange = (event: any, newValue: string) => {
     setValue(newValue);
@@ -154,7 +157,11 @@ export function VisitMyPage(props: any) {
                     >
                       <Box className={"bottom_box"}>
                         <Pagination
-                          count={memberArticleSearchObj.limit}
+                          count={
+                            memberArticleSearchObj.page >= 3
+                              ? memberArticleSearchObj.page + 1
+                              : 3
+                          }
                           page={memberArticleSearchObj.page}
                           renderItem={(item) => (
                             <PaginationItem
@@ -175,13 +182,23 @@ export function VisitMyPage(props: any) {
                 <TabPanel value={"2"}>
                   <Box className={"menu_name"}>Followers</Box>
                   <Box className={"menu_content"}>
-                    <MemberFollowers actions_enabled={true} />
+                    <MemberFollowers
+                      followRebuild={followRebuild}
+                      setFollowRebuild={setFollowRebuild}
+                      actions_enabled={true}
+                      mb_id={verifiedMemberData?._id}
+                    />
                   </Box>
                 </TabPanel>
                 <TabPanel value={"3"}>
                   <Box className={"menu_name"}>Following</Box>
                   <Box className={"menu_content"}>
-                    <MemberFollowing actions_enabled={true} />
+                    <MemberFollowing
+                      followRebuild={followRebuild}
+                      setFollowRebuild={setFollowRebuild}
+                      actions_enabled={true}
+                      mb_id={verifiedMemberData?._id}
+                    />
                   </Box>
                 </TabPanel>
 
@@ -222,15 +239,34 @@ export function VisitMyPage(props: any) {
                 >
                   <div className={"order_user_img"}>
                     <img
-                      src={"/auth/default_user.svg"}
+                      src={
+                        verifiedMemberData?.mb_image
+                          ? verifiedMemberData?.mb_image
+                          : "/auth/default_user.svg"
+                      }
+                      style={{
+                        width: "117px",
+                        height: "112px",
+                        borderRadius: "37px",
+                      }}
                       className={"order_user_avatar"}
                     />
                     <div className={"order_user_icon_box"}>
-                      <img src={"/icons/user_icon.svg"} />
+                      <img
+                        src={
+                          chosenMember?.mb_type === "RESTAURANT"
+                            ? "/icons/restaurant.svg"
+                            : "/icons/User.svg"
+                        }
+                      />
                     </div>
                   </div>
-                  <span className={"order_user_name"}>STAS</span>
-                  <span className={"order_user_prof"}>USER</span>
+                  <span className={"order_user_name"}>
+                    {verifiedMemberData?.mb_nick}
+                  </span>
+                  <span className={"order_user_prof"}>
+                    {verifiedMemberData?.mb_type}
+                  </span>
                 </Box>
                 <Box className={"user_media_box"}>
                   <FacebookIcon />
@@ -239,10 +275,17 @@ export function VisitMyPage(props: any) {
                   <YouTubeIcon />
                 </Box>
                 <Box className={"user_media_box"}>
-                  <p className={"follows"}>Followers: 7</p>
-                  <p className={"follows"}>Followings: 5</p>
+                  <p className={"follows"}>
+                    Followers: {chosenMember?.mb_subscriber_cnt}
+                  </p>
+                  <p className={"follows"}>
+                    Followings: {chosenMember?.mb_follow_cnt}
+                  </p>
                 </Box>
-                <p className={"user_desc"}>Junior Full Stack Developer</p>
+                <p className={"user_desc"}>
+                  {chosenMember?.mb_description ??
+                    "Qo'shimcha ma'lumot kiritilmagan"}
+                </p>
                 <Box
                   display={"flex"}
                   justifyContent={"flex-end"}

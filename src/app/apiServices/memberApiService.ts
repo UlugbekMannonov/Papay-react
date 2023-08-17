@@ -4,11 +4,14 @@ import assert from "assert";
 import { Definer } from "../../lib/Definer";
 import { Member } from "../../types/user";
 import { MemberLiken } from "../../types/others";
-class MemberAipService {
+
+class MemberApiService {
   private readonly path: string;
+
   constructor() {
     this.path = serverApi;
   }
+
   public async loginRequest(login_data: any) {
     try {
       const result = await axios.post(this.path + "/login", login_data, {
@@ -27,6 +30,7 @@ class MemberAipService {
       throw err;
     }
   }
+
   public async signupRequest(signup_data: any) {
     try {
       const result = await axios.post(this.path + "/signup", signup_data, {
@@ -45,6 +49,7 @@ class MemberAipService {
       throw err;
     }
   }
+
   public async logOutRequest() {
     try {
       const result = await axios.get(this.path + "/logout", {
@@ -62,6 +67,7 @@ class MemberAipService {
       throw err;
     }
   }
+
   public async memberLikeTarget(data: any) {
     try {
       const url = "/member-liken",
@@ -84,7 +90,7 @@ class MemberAipService {
   public async getChosenMember(id: string) {
     try {
       const url = `/member/${id}`,
-        result = await axios.get(this.path + url, {
+        result = await axios.post(this.path + url, {
           withCredentials: true,
         });
 
@@ -100,4 +106,5 @@ class MemberAipService {
     }
   }
 }
-export default MemberAipService;
+
+export default MemberApiService;
