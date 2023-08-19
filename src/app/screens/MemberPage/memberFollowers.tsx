@@ -15,6 +15,7 @@ import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { useHistory } from "react-router-dom";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
@@ -50,6 +51,7 @@ const memberFollowersRetriever = createSelector(
 
 export function MemberFollowers(props: any) {
   /** INITIALIZATIONS */
+  const history = useHistory();
   const { mb_id, followRebuild, setFollowRebuild } = props;
   const { setMemberFollowers } = actionDispatch(useDispatch());
   const { memberFollowers } = useSelector(memberFollowersRetriever);
@@ -86,6 +88,11 @@ export function MemberFollowers(props: any) {
     setFollowersSearchObj({ ...followersSearchObj });
   };
 
+  const visitMemberHandler = (mb_id: string) => {
+    history.push(`/member-page/other?mb_id=${mb_id}`);
+    document.location.reload();
+  };
+
   return (
     <Stack>
       {memberFollowers?.map((follower: Follower) => {
@@ -94,7 +101,12 @@ export function MemberFollowers(props: any) {
           : "/auth/default_user_1.png";
         return (
           <Box className={"follow_box"}>
-            <Avatar src={image_url} sx={{ width: 99, height: 99 }} />
+            <Avatar
+              src={image_url}
+              style={{ cursor: "pointer" }}
+              sx={{ width: 99, height: 99 }}
+              onClick={() => visitMemberHandler(follower?.subscriber_id)}
+            />
 
             <div
               style={{
@@ -106,7 +118,11 @@ export function MemberFollowers(props: any) {
                 justifyContent: "center",
               }}
             >
-              <span className={"username_text"}>
+              <span
+                className={"username_text"}
+                style={{ cursor: "pointer" }}
+                onClick={() => visitMemberHandler(follower?.subscriber_id)}
+              >
                 {follower?.subscriber_member_data?.mb_type}
               </span>
               <span className="name_text">

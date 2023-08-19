@@ -11,6 +11,7 @@ import {
 } from "../../../lib/sweetAlert";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useHistory } from "react-router-dom";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
@@ -43,6 +44,7 @@ const followings = [
 
 export function MemberFollowing(props: any) {
   /** INITIALIZATIONS */
+  const history = useHistory();
   const { mb_id, followRebuild, setFollowRebuild } = props;
   const { setMemberFollowings } = actionDispatch(useDispatch());
   const { memberFollowings } = useSelector(memberFollowingsRetriever);
@@ -79,6 +81,11 @@ export function MemberFollowing(props: any) {
     setFollowingsSearchObj({ ...followingsSearchObj });
   };
 
+  const visitMemberHandler = (mb_id: string) => {
+    history.push(`/member-page/other?mb_id=${mb_id}`);
+    document.location.reload();
+  };
+
   
   return (
     <Stack>
@@ -87,8 +94,14 @@ export function MemberFollowing(props: any) {
           ? `${serverApi}/${following.follow_member_data.mb_image}`
           : "/auth/default_user_1.png";
         return (
-          <Box className="follow_box">
-            <Avatar alt="" src={image_url} sx={{ width: 99, height: 99 }} />
+          <Box className="follow_box" style={{ cursor: "pointer" }}>
+            <Avatar
+              alt=""
+              src={image_url}
+              sx={{ width: 99, height: 99 }}
+              style={{ cursor: "pointer" }}
+              onClick={() => visitMemberHandler(following?.follow_id)}
+            />
             <div
               style={{
                 width: "400px",
@@ -99,7 +112,11 @@ export function MemberFollowing(props: any) {
                 justifyContent: "center",
               }}
             >
-              <span className="username_text">
+              <span
+                className="username_text"
+                style={{ cursor: "pointer" }}
+                onClick={() => visitMemberHandler(following?.follow_id)}
+              >
                 {following?.follow_member_data?.mb_type}
               </span>
               <span className="name_text">
