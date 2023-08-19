@@ -90,7 +90,7 @@ export function VisitMyPage(props: any) {
   const [articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
   const [followRebuild, setFollowRebuild] = useState<boolean>(false);
   const [memberArticleSearchObj, setMemberArticleSearchObj] =
-    useState<SearchMemberArticlesObj>({ mb_id: "none", page: 1, limit: 5 });
+    useState<SearchMemberArticlesObj>({ mb_id: "none", page: 1, limit: 4 });
 
   useEffect(() => {
     if (!verifiedMemberData) {
@@ -205,7 +205,10 @@ export function VisitMyPage(props: any) {
                 <TabPanel value={"4"}>
                   <Box className={"menu_name"}>Maqola yozish</Box>
                   <Box className={"write_content"}>
-                    <TuiEditor />
+                    <TuiEditor
+                      setValue={setValue}
+                      setArticlesRebuild={setArticlesRebuild}
+                    />
                   </Box>
                 </TabPanel>
 
@@ -322,10 +325,7 @@ export function VisitMyPage(props: any) {
                     style={{ flexDirection: "column" }}
                     value={"1"}
                     component={() => (
-                      <div
-                        className={`menu_box`}
-                        onClick={() => setValue("1")}
-                      >
+                      <div className={`menu_box`} onClick={() => setValue("1")}>
                         <img src={"/icons/pencil.svg"} />
                         <span>Maqolalarim</span>
                       </div>
@@ -335,10 +335,7 @@ export function VisitMyPage(props: any) {
                     style={{ flexDirection: "column" }}
                     value={"2"}
                     component={() => (
-                      <div
-                        className={`menu_box`}
-                        onClick={() => setValue("2")}
-                      >
+                      <div className={`menu_box`} onClick={() => setValue("2")}>
                         <img src={"/icons/follower.svg"} />
                         <span>Follower</span>
                       </div>
