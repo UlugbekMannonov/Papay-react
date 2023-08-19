@@ -19,7 +19,6 @@ import { Definer } from "../../../lib/Definer";
 import MemberApiService from "../../apiServices/memberApiService";
 import { verifiedMemberData } from "../../apiServices/verify";
 
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 export function TargetArticles(props: any) {
   const { setArticlesRebuild } = props;
@@ -56,7 +55,7 @@ export function TargetArticles(props: any) {
           <Link
             className="all_article_box"
             sx={{ textDecoration: "none" }}
-            href={``}
+            href={`/member-page/other?mb_id=${article.mb_id}&art_id=${article._id}`}
           >
             <Box
               className={"all_article_img"}

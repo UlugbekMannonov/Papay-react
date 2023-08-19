@@ -1,10 +1,10 @@
 import Cookies from 'universal-cookie';
 import { serverApi } from "../../lib/config";
 
-const cookie = new Cookies();
+const cookies = new Cookies();
 let member_data: any = null;
 
-if (cookie.get('access_token')) {
+if (cookies.get('access_token')) {
 	const memberDataJson: any = localStorage.getItem('member_data')
 		? localStorage.getItem('member_data')
 		: null;
