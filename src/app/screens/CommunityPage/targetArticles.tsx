@@ -17,6 +17,7 @@ import {
 import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 import MemberApiService from "../../apiServices/memberApiService";
+import { verifiedMemberData } from "../../apiServices/verify";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -25,7 +26,7 @@ export function TargetArticles(props: any) {
   /** HANDLERS **/
   const targetLikeHandler = async (e: any) => {
     try {
-      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      assert.ok(verifiedMemberData, Definer.auth_err1);
 
       const memberService = new MemberApiService();
       const like_result = await memberService.memberLikeTarget({
@@ -59,7 +60,9 @@ export function TargetArticles(props: any) {
           >
             <Box
               className={"all_article_img"}
-              sx={{ backgroundImage: `url(${artImage_url})` }}
+              sx={{
+                backgroundImage: `url(${artImage_url.replace(/\\/g, "/")})`,
+              }}
             ></Box>
             <Box className={"all_article_container"}>
               <Box alignItems="center" display="flex">

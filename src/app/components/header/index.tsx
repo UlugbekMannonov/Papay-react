@@ -13,6 +13,8 @@ import {
 import { NavLink } from "react-router-dom";
 import { Logout } from "@mui/icons-material";
 import Basket from "./basket";
+import { verifiedMemberData } from "../../apiServices/verify";
+
 export function NavbarHome(props: any) {
   /** INITIALIZATIONS */
   return (
@@ -42,7 +44,7 @@ export function NavbarHome(props: any) {
                 Oshhona
               </NavLink>
             </Box>
-            {props.verifiedMemberData ? (
+            {verifiedMemberData ? (
               <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/orders" activeClassName="underline">
                   Buyurtma
@@ -54,7 +56,7 @@ export function NavbarHome(props: any) {
                 Jamiyat
               </NavLink>
             </Box>
-            {props.verifiedMemberData ? (
+            {verifiedMemberData ? (
               <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/member-page" activeClassName="underline">
                   Sahifam
@@ -75,7 +77,7 @@ export function NavbarHome(props: any) {
               setOrderRebuild={props.setOrderRebuild}
             />
 
-            {!props.verifiedMemberData ? (
+            {!verifiedMemberData ? (
               <Box>
                 <Button
                   variant="contained"
@@ -88,7 +90,7 @@ export function NavbarHome(props: any) {
             ) : (
               <img
                 style={{ width: "48px", height: "48px", borderRadius: "24px" }}
-                src={props.verifiedMemberData.mb_image}
+                src={verifiedMemberData.mb_image}
                 onClick={props.handleLogOutClick}
               />
             )}
@@ -148,7 +150,7 @@ export function NavbarHome(props: any) {
             </Box>
             <Box className="timeline_service">24 soat xizmatingizdamiz.</Box>
             <Box sx={{ mt: "90px" }}>
-              {!props.verifiedMemberData ? (
+              {!verifiedMemberData ? (
                 <Button
                   className="blue-btn"
                   variant="contained"

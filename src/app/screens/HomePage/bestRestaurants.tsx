@@ -26,6 +26,8 @@ import {
   sweetTopSmallSuccessAlert,
 } from "../../../lib/sweetAlert";
 import { useHistory } from "react-router-dom";
+import { verifiedMemberData } from "../../apiServices/verify";
+
 /** REDUX SELECTOR */
 const bestRestaurantRetriever = createSelector(
   retrieveBestRestaurants,
@@ -47,7 +49,7 @@ export function BestRestaurants() {
   };
   const targetLikeBest = async (e: any, id: string) => {
     try {
-      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      assert.ok(verifiedMemberData, Definer.auth_err1);
       const memberService = new MemberApiService(),
         like_result: any = await memberService.memberLikeTarget({
           like_ref_id: id,

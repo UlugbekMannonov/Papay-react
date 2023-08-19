@@ -23,6 +23,7 @@ import {
 import OrderApiService from "../../apiServices/orderApiService";
 import { Member } from "../../../types/user";
 import TabContext from "@mui/lab/TabContext";
+import { verifiedMemberData } from "../../apiServices/verify";
 
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
