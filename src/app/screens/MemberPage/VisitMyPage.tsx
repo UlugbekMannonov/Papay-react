@@ -75,7 +75,6 @@ const chosenSingleBoArticleRetriever = createSelector(
 
 export function VisitMyPage(props: any) {
   /** INITIALIZATIONS **/
-  const { verifiedMemberData } = props;
   const {
     setChosenMember,
     setchosenMemberBoArticles,
@@ -90,7 +89,11 @@ export function VisitMyPage(props: any) {
   const [articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
   const [followRebuild, setFollowRebuild] = useState<boolean>(false);
   const [memberArticleSearchObj, setMemberArticleSearchObj] =
-    useState<SearchMemberArticlesObj>({ mb_id: "none", page: 1, limit: 4 });
+    useState<SearchMemberArticlesObj>({
+      mb_id: "none",
+      page: 1,
+      limit: 4,
+    });
 
   useEffect(() => {
     if (!verifiedMemberData) {
@@ -100,7 +103,7 @@ export function VisitMyPage(props: any) {
     const communityService = new CommunityApiService();
     const memberService = new MemberApiService();
     communityService
-      .getCommunityArticles(memberArticleSearchObj)
+      .getMemberCommunityArticles(memberArticleSearchObj)
       .then((data) => setchosenMemberBoArticles(data))
       .catch((err) => console.log(err));
     memberService
@@ -165,6 +168,7 @@ export function VisitMyPage(props: any) {
                           page={memberArticleSearchObj.page}
                           renderItem={(item) => (
                             <PaginationItem
+                              sx={{ color: "#6495ED" }}
                               components={{
                                 previous: ArrowBackIcon,
                                 next: ArrowForwardIcon,
@@ -320,6 +324,7 @@ export function VisitMyPage(props: any) {
                   value={value}
                   onChange={handleChange}
                   aria-label="Vertical tabs example"
+                  sx={{ borderRight: 1, borderColor: "divider", width: "95%" }}
                 >
                   <Tab
                     style={{ flexDirection: "column" }}

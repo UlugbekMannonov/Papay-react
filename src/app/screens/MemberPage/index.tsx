@@ -19,7 +19,7 @@ export function MemberPage(props: any) {
   console.log("QUERY mb_id:", query.get("mb_id"));
 
   return (
-    <div className="member_page">
+    <div className="restaurant_page">
       <Switch>
         <Route path={`${member?.path}/other`}>
           <VisitOtherPage

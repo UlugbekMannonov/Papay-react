@@ -261,6 +261,7 @@ export function AllRestaurants() {
               page={targetSearchObject.page}
               renderItem={(item) => (
                 <PaginationItem
+                  sx={{ color: "#6495ED" }}
                   components={{
                     previous: ArrowBackIcon,
                     next: ArrowForwardIcon,

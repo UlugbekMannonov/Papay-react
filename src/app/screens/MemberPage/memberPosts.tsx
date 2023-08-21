@@ -73,7 +73,7 @@ export function MemberPosts(props: any) {
                     src={
                       article?.member_data?.mb_image
                         ? `${serverApi}/${article.member_data.mb_image}`
-                        : "/auth/default_user_1.png"
+                        : "/auth/default_user.svg"
                     }
                     width={"35px"}
                     height={"35px"}

@@ -32,12 +32,11 @@ const actionDispatch = (dispach: Dispatch) => ({
   setFinishedOrders: (data: Order[]) => dispach(setFinishedOrders(data)),
 });
 
-export function OrderPage(props: any) {
+export function OrdersPage(props: any) {
   /* INITIALIZATIONS */
   const [value, setValue] = useState("1");
   const { setPausedOrders, setProcessOrders, setFinishedOrders } =
     actionDispatch(useDispatch());
-  const verifiedMemberData: Member | null = props.verifiedMemberData;
 
   useEffect(() => {
     const orderService = new OrderApiService();

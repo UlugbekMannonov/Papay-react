@@ -161,6 +161,8 @@
     flex-direction: column;
     align-items: center;
   }
+
+  
   
   .my_page .MuiTabs-flexContainer {
     flex-direction: column;
@@ -185,18 +187,33 @@
   .my_page_menu .menu_box {
     margin-bottom: 10px;
     padding: 0px 20px;
-    width: 100%;
+    width: 98%;
     height: 50px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border-radius: 20px 20px 20px 20px;
+    border-radius: 10px;
     background: #ffffff;
     box-shadow: inset 1px 4px 4px rgb(172 87 87 / 25%),
       inset 0px 4px 4px rgb(0 0 0 / 25%), inset 0px 4px 4px rgb(0 0 0 / 25%);
   }
+
+  .my_page .my_page_right .user_media_box_1,
+.user_desc {
+  color: #a1a1a1;
+  font-family: "Commissioner";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 30px;
+
+  display: flex;
+  justify-content: center;
+  column-gap: 23px;
+}
+
   
   .my_page .menu_box img {
     width: 25px;
@@ -227,6 +244,82 @@
     box-shadow: inset 1px 4px 4px rgb(172 87 87 / 25%),
       inset 0px 4px 4px rgb(0 0 0 / 25%), inset 0px 4px 4px rgb(0 0 0 / 25%);
   }
+
+  /******************* starting Following ****************/
+
+.my_page .follow_box {
+  width: 821.42px;
+  height: 140px;
+  flex-shrink: 0;
+  border-radius: 17px;
+  background: linear-gradient(
+    180deg,
+    rgba(38, 112, 129, 0.9) 0%,
+    rgba(21, 61, 70, 0.9) 100%
+  );
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15),
+    3px 2px 9px 0px rgba(255, 255, 255, 0.25) inset;
+
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+  margin-top: 15px;
+}
+
+.my_page .follow_box .username_text,
+.name_text {
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.my_page .follow_box .name_text {
+  font-size: 26px;
+  font-weight: 400;
+}
+
+.my_page .follow_box .follow_cancel_btn {
+  border-radius: 26px;
+  border: 1px solid #fff;
+  background: #e81010;
+  box-shadow: 1px 4px 6px 0px rgba(211, 211, 211, 0.25),
+    0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset;
+}
+
+.my_page .follow_box .following {
+  width: 160px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 26px;
+  background: #68c5cb;
+  box-shadow: 1px 4px 6px 0px rgba(211, 211, 211, 0.25),
+    0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset;
+
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.my_page .follow_box .follow_btn {
+  border-radius: 26px;
+  border: 1px solid #fff;
+  background: #30945e;
+  box-shadow: 1px 4px 6px 0px rgba(211, 211, 211, 0.25),
+    0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset;
+
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
   
   .my_page .following_list {
     display: flex;

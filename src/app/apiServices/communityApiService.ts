@@ -82,7 +82,7 @@ class CommunityApiService {
     }
   }
 
-  public async getCommunityArticles(data: SearchMemberArticlesObj) {
+  public async getMemberCommunityArticles(data: SearchMemberArticlesObj) {
     try {
       let url = `/community/articles?mb_id=${data.mb_id}&page=${data.page}&limit=${data.limit}`;
 
@@ -97,7 +97,7 @@ class CommunityApiService {
       const articles: BoArticle[] = result.data.data;
       return articles;
     } catch (err: any) {
-      console.log(`ERROR ::: getCommunityArticles, ${err.message}`);
+      console.log(`ERROR ::: getMemberCommunityArticles, ${err.message}`);
       throw err;
     }
   }

@@ -110,6 +110,7 @@ export const TuiEditor = (props: any) => {
               value={communityArticleData.bo_id}
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}
+              onChange={changeCategoryHandler}
             >
               <MenuItem value={""}>
                 <span>Kategoriyani tanlang</span>
@@ -140,10 +141,11 @@ export const TuiEditor = (props: any) => {
       <Editor
         /*@ts-ignore*/
         ref={editorRef}
+        initialValue="Type here"
         placeholder="Type here"
         previewStyle="vertical"
         height="640px"
-        initialEditType="markdown"
+        // initialEditType="markdown"
         toolbarItems={[
           ["heading", "bold", "italic", "strike"],
           ["image", "table", "link"],

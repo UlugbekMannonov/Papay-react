@@ -66,13 +66,13 @@ export function TargetArticles(props: any) {
             <Box className={"all_article_container"}>
               <Box alignItems="center" display="flex">
                 <img
-                  src={mb_image?.replace(/\\/g, "/")}
+                  src={mb_image?.replace(/\\/, "/")}
                   width="35px"
                   height={"35px"}
                   style={{ borderRadius: "50%", backgroundSize: "cover" }}
                 />
                 <span className={"all_article_author_user"}>
-                  {article.member_data.mb_nick}
+                  {article?.member_data.mb_nick}
                 </span>
               </Box>
               <Box display="flex" flexDirection="column" sx={{ mt: "15px" }}>

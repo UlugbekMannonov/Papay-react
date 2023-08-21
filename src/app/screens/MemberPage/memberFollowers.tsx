@@ -100,7 +100,7 @@ export function MemberFollowers(props: any) {
       {memberFollowers?.map((follower: Follower) => {
         const image_url = follower?.subscriber_member_data?.mb_image
           ? `${serverApi}/${follower.subscriber_member_data.mb_image}`
-          : "/auth/default_user_1.png";
+          : "/auth/default_user.svg";
         return (
           <Box className={"follow_box"}>
             <Avatar
@@ -174,6 +174,7 @@ export function MemberFollowers(props: any) {
             page={followersSearchObj.page}
             renderItem={(item) => (
               <PaginationItem
+                sx={{ color: "#6495ED" }}
                 components={{
                   previous: ArrowBackIcon,
                   next: ArrowForwardIcon,
