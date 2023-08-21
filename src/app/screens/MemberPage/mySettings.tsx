@@ -10,7 +10,7 @@ import {
   sweetErrorHandling,
   sweetTopSmallSuccessAlert,
 } from "../../../lib/sweetAlert";
-import MemberAipService from "../../apiServices/memberApiService";
+import MemberApiService from "../../apiServices/memberApiService";
 
 export function MySettings(props: any) {
   /** INITIALIZATIONS */
@@ -61,7 +61,7 @@ export function MySettings(props: any) {
 
   const handleSubmitButton = async () => {
     try {
-      const memberService = new MemberAipService();
+      const memberService = new MemberApiService();
       const result = await memberService.updateMemberData(memberUpdate);
 
       assert.ok(result, Definer.general_err1);

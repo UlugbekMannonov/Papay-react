@@ -220,7 +220,7 @@ export function VisitMyPage(props: any) {
                   <Box className={"menu_name"}>Tanlangan Maqola</Box>
                   <Box className={"menu_content"}>
                     <TViewer
-                      renderChosenArticleHandler={renderChosenArticleHandler}
+                      // renderChosenArticleHandler={renderChosenArticleHandler}
                       chosenSingleBoArticle={chosenSingleBoArticle}
                     />
                   </Box>
