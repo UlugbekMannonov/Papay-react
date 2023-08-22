@@ -63,8 +63,8 @@ export function CommunityChats() {
       console.log("CLIENT: connected");
     });
 
-    socket?.on("newMsg", (new_massage: ChatMessage) => {
-      console.log("CLIENT: new message");
+    socket?.on("newMsg", (new_message: ChatMessage) => {
+      // console.log("CLIENT: new message");
 
       messagesList.push(
         // @ts-ignore
@@ -104,14 +104,14 @@ export function CommunityChats() {
   const getInputMessageHandler = useCallback(
     (e: any) => {
       const text = e.target.value;
-      setMessagesList(text);
+      setMessage(text);
     },
-    [messagesList]
+    [message]
   );
 
   const getKeyHandler = (e: any) => {
     try {
-      if (e.key == "Enter") {
+      if (e.key === "Enter") {
         assert.ok(message, Definer.input_err3);
         onClickHandler();
       }
@@ -132,14 +132,14 @@ export function CommunityChats() {
       textInput.current.value = "";
       assert.ok(message, Definer.input_err3);
 
-      const mb_imgae_url =
-        verifiedMemberData?.mb_imgae ?? "/auth/default_user_1.png";
+      const mb_image_url =
+        verifiedMemberData?.mb_image ?? "/auth/default_user.svg";
 
       socket.emit("createMsg", {
         msg: message,
         mb_id: verifiedMemberData?._id,
         mb_nick: verifiedMemberData?.mb_nick,
-        mb_image: mb_imgae_url,
+        mb_image: mb_image_url,
       });
       setMessage("");
     } catch (err: any) {

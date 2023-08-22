@@ -1,8 +1,6 @@
 import React from "react";
 import { Box, Link, Stack } from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import Checkbox from "@mui/material/Checkbox";
 import moment from "moment";
 
@@ -21,7 +19,7 @@ import { verifiedMemberData } from "../../apiServices/verify";
 
 
 export function TargetArticles(props: any) {
-  const { setArticlesRebuild } = props;
+  // const { setArticlesRebuild } = props;
   /** HANDLERS **/
   const targetLikeHandler = async (e: any) => {
     try {
@@ -34,7 +32,7 @@ export function TargetArticles(props: any) {
       });
       assert.ok(like_result, Definer.general_err1);
       await sweetTopSmallSuccessAlert("success", 800, false);
-      setArticlesRebuild(new Date());
+      props.setArticlesRebuild(new Date());
     } catch (err: any) {
       console.log(err);
       sweetErrorHandling(err).then();
@@ -55,7 +53,7 @@ export function TargetArticles(props: any) {
           <Link
             className="all_article_box"
             sx={{ textDecoration: "none" }}
-            href={`/member-page/other?mb_id=${article.mb_id}&art_id=${article._id}`}
+            href={`/member-page/other?mb_id=${article?.mb_id}&art_id=${article?._id}`}
           >
             <Box
               className={"all_article_img"}

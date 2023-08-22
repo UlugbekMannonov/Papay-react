@@ -21,7 +21,6 @@ export function MemberPosts(props: any) {
     chosenMemberBoArticles,
     renderChosenArticleHandler,
     setArticlesRebuild,
-    chosenSingleBoArticle,
   } = props;
 
   /** HANDLERS */
