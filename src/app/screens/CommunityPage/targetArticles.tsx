@@ -88,7 +88,9 @@ export function TargetArticles(props: any) {
                 color={"#fff"}
                 className={"target_icons"}
               >
-                <span>{moment().format("YY-MM-DD HH:mm")}</span>
+                <span>
+                  {moment(article?.createdAt).format("YY-MM-DD HH:mm")}
+                </span>
                 <Checkbox
                   sx={{ ml: "40px" }}
                   icon={<FavoriteBorder />}

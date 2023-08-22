@@ -111,7 +111,7 @@ export default function ProcessOrders(props: any) {
                     />
                   </Box>
                   <Box>
-                    <p>{moment(order.createdAt).format("YYYY-MM-DD HH:mm")} </p>
+                    <p>{moment(order?.createdAt).format("YYYY-MM-DD HH:mm")} </p>
                   </Box>
                   <Box>
                     <Marginer
