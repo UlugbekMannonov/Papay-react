@@ -18,7 +18,7 @@ import {
 } from "./selector";
 import CommunityApiService from "../../apiServices/communityApiService";
 import { serverApi } from "../../../lib/config";
-import {TViewer} from "../../components/tuiEditor/TViewer";
+import TViewer from "../../components/tuiEditor/TViewer";
 
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({

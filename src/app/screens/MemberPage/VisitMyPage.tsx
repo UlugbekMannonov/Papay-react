@@ -18,8 +18,8 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { TuiEditor } from "../../components/tuiEditor/TuiEditor";
-import { TViewer } from "../../components/tuiEditor/TViewer";
+import TuiEditor from "../../components/tuiEditor/TuiEditor";
+import TViewer from "../../components/tuiEditor/TViewer";
 import { Member } from "../../../types/user";
 import { BoArticle, SearchMemberArticlesObj } from "../../../types/boArticle";
 // REDUX
@@ -41,7 +41,7 @@ import {
   sweetFailureProvider,
 } from "../../../lib/sweetAlert";
 import CommunityApiService from "../../apiServices/communityApiService";
-import MemberApiService from "../../apiServices/memberApiService";
+import MemberAipService from "../../apiServices/memberApiService";
 import { verifiedMemberData } from "../../apiServices/verify";
 
 /** REDUX SLICE */
@@ -74,7 +74,7 @@ const chosenSingleBoArticleRetriever = createSelector(
 );
 
 export function VisitMyPage(props: any) {
-  /** INITIALIZATIONS **/
+  /** INITIALIZATIONS */
   const {
     setChosenMember,
     setchosenMemberBoArticles,
@@ -85,15 +85,11 @@ export function VisitMyPage(props: any) {
     chosenMemberBoArticlesRetriever
   );
   const { chosenSingleBoArticle } = useSelector(chosenSingleBoArticleRetriever);
-  const [value, setValue] = useState("1");
+  const [value, setValue] = React.useState("1");
   const [articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
-  const [followRebuild, setFollowRebuild] = useState<boolean>(false);
+  const [followeRebuild, setFollowRebuild] = useState<boolean>(false);
   const [memberArticleSearchObj, setMemberArticleSearchObj] =
-    useState<SearchMemberArticlesObj>({
-      mb_id: "none",
-      page: 1,
-      limit: 4,
-    });
+    useState<SearchMemberArticlesObj>({ mb_id: "none", page: 1, limit: 4 });
 
   useEffect(() => {
     if (!verifiedMemberData) {
@@ -101,22 +97,22 @@ export function VisitMyPage(props: any) {
     }
 
     const communityService = new CommunityApiService();
-    const memberService = new MemberApiService();
+    const memberService = new MemberAipService();
     communityService
-      .getMemberCommunityArticles(memberArticleSearchObj)
+      .getCommunityArticles(memberArticleSearchObj)
       .then((data) => setchosenMemberBoArticles(data))
       .catch((err) => console.log(err));
+
     memberService
       .getChosenMember(verifiedMemberData?._id)
       .then((data) => setChosenMember(data))
       .catch((err) => console.log(err));
-}, [memberArticleSearchObj, articlesRebuild, followRebuild]);
-  
-  /** HANDLERS **/
+  }, [memberArticleSearchObj, articlesRebuild, followeRebuild]);
+
+  /** HANDLERS */
   const handleChange = (event: any, newValue: string) => {
     setValue(newValue);
   };
-
   const handlePaginationChange = (event: any, value: number) => {
     memberArticleSearchObj.page = value;
     setMemberArticleSearchObj({ ...memberArticleSearchObj });
@@ -137,231 +133,243 @@ export function VisitMyPage(props: any) {
       sweetErrorHandling(err).then();
     }
   };
+
   return (
     <div className={"my_page"}>
-      <Container maxWidth="lg" sx={{ mt: "50px", mb: "50px" }}>
+      <Container
+        style={{ display: "flex", flexDirection: "column" }}
+        maxWidth="lg"
+        sx={{ mt: "50px", mb: "50px" }}
+      >
         <Stack className={"my_page_frame"}>
           <TabContext value={value}>
-            <Stack className={"my_page_left"}>
-              <Box display={"flex"} flexDirection={"column"}>
-                <TabPanel value={"1"}>
-                  <Box className={"menu_name"}>Mening Maqolalarim</Box>
-                  <Box className={"menu_content"}>
-                    <MemberPosts
-                      chosenMemberBoArticles={chosenMemberBoArticles}
-                      renderChosenArticleHandler={renderChosenArticleHandler}
-                      setArticlesRebuild={setArticlesRebuild}
-                    />
-                    <Stack
-                      sx={{ my: "40px" }}
-                      direction="row"
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      <Box className={"bottom_box"}>
-                        <Pagination
-                          count={
-                            memberArticleSearchObj.page >= 3
-                              ? memberArticleSearchObj.page + 1
-                              : 3
-                          }
-                          page={memberArticleSearchObj.page}
-                          renderItem={(item) => (
-                            <PaginationItem
-                              sx={{ color: "#6495ED" }}
-                              components={{
-                                previous: ArrowBackIcon,
-                                next: ArrowForwardIcon,
-                              }}
-                              {...item}
-                              color={"secondary"}
-                            />
-                          )}
-                          onChange={handlePaginationChange}
-                        />
-                      </Box>
-                    </Stack>
-                  </Box>
-                </TabPanel>
-                <TabPanel value={"2"}>
-                  <Box className={"menu_name"}>Followers</Box>
-                  <Box className={"menu_content"}>
-                    <MemberFollowers
-                      followRebuild={followRebuild}
-                      setFollowRebuild={setFollowRebuild}
-                      actions_enabled={true}
-                      mb_id={verifiedMemberData?._id}
-                    />
-                  </Box>
-                </TabPanel>
-                <TabPanel value={"3"}>
-                  <Box className={"menu_name"}>Following</Box>
-                  <Box className={"menu_content"}>
-                    <MemberFollowing
-                      followRebuild={followRebuild}
-                      setFollowRebuild={setFollowRebuild}
-                      actions_enabled={true}
-                      mb_id={verifiedMemberData?._id}
-                    />
-                  </Box>
-                </TabPanel>
+            <Box display={"flex"}>
+              <Stack className={"my_page_left"}>
+                <Box display="flex" flexDirection="column">
+                  <TabPanel value="1">
+                    <Box className={"menu_name"}>Mening Maqolalarim</Box>
+                    <Box className={"menu_content"}>
+                      <MemberPosts
+                        chosenMemberBoArticles={chosenMemberBoArticles}
+                        renderChosenArticleHandler={renderChosenArticleHandler}
+                        setArticlesRebuild={setArticlesRebuild}
+                      />
+                      <Stack
+                        sx={{ my: "40px" }}
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="center"
+                      >
+                        <Box className="bottom_box">
+                          <Pagination
+                            count={
+                              memberArticleSearchObj.page >= 3
+                                ? memberArticleSearchObj.page + 1
+                                : 3
+                            }
+                            page={memberArticleSearchObj.page}
+                            renderItem={(item) => (
+                              <PaginationItem
+                                sx={{ color: "#6495ED" }}
+                                components={{
+                                  previous: ArrowBackIcon,
+                                  next: ArrowForwardIcon,
+                                }}
+                                {...item}
+                                color="secondary"
+                              />
+                            )}
+                            onChange={handlePaginationChange}
+                          />
+                        </Box>
+                      </Stack>
+                    </Box>
+                  </TabPanel>
 
-                <TabPanel value={"4"}>
-                  <Box className={"menu_name"}>Maqola yozish</Box>
-                  <Box className={"write_content"}>
-                    <TuiEditor
-                      setValue={setValue}
-                      setArticlesRebuild={setArticlesRebuild}
-                    />
-                  </Box>
-                </TabPanel>
+                  <TabPanel value="2">
+                    <Box className="menu_name">Followers</Box>
+                    <Box className="menu_content">
+                      <MemberFollowers
+                        actions_enabled={true}
+                        followeRebuild={followeRebuild}
+                        setFollowRebuild={setFollowRebuild}
+                        mb_id={verifiedMemberData?._id}
+                      />
+                    </Box>
+                  </TabPanel>
 
-                <TabPanel value={"5"}>
-                  <Box className={"menu_name"}>Tanlangan Maqola</Box>
-                  <Box className={"menu_content"}>
-                    <TViewer
-                      // renderChosenArticleHandler={renderChosenArticleHandler}
-                      chosenSingleBoArticle={chosenSingleBoArticle}
-                    />
-                  </Box>
-                </TabPanel>
+                  <TabPanel value="3">
+                    <Box className="menu_name">Following</Box>
+                    <Box className="menu_content">
+                      <MemberFollowing
+                        followeRebuild={followeRebuild}
+                        setFollowRebuild={setFollowRebuild}
+                        actions_enabled={true}
+                        mb_id={verifiedMemberData?._id}
+                      />
+                    </Box>
+                  </TabPanel>
 
-                <TabPanel value={"6"}>
-                  <Box className={"menu_name"}>Ma'lumotlarni o'zgartirish</Box>
-                  <Box className={"menu_content"}>
-                    <MySettings />
-                  </Box>
-                </TabPanel>
-              </Box>
-            </Stack>
-            <Stack className={"my_page_right"}>
-              <Box className={"order_info_box"}>
-                <a onClick={() => setValue("6")} className={"settings_btn"}>
-                  <SettingsIcon />
-                </a>
-                <Box
-                  display={"flex"}
-                  flexDirection={"column"}
-                  alignItems={"center"}
-                >
-                  <div className={"order_user_img"}>
-                    <img
-                      src={
-                        verifiedMemberData?.mb_image
-                          ? verifiedMemberData?.mb_image
-                          : "/auth/default_user.svg"
-                      }
-                      style={{
-                        width: "117px",
-                        height: "112px",
-                        borderRadius: "37px",
-                      }}
-                      className={"order_user_avatar"}
-                    />
-                    <div className={"order_user_icon_box"}>
+                  <TabPanel value="4">
+                    <Box className="menu_name">Maqola yozish</Box>
+                    <Box className="write_content">
+                      <TuiEditor
+                        setValue={setValue}
+                        setArticlesRebuild={setArticlesRebuild}
+                      />
+                    </Box>
+                  </TabPanel>
+
+                  <TabPanel value="5">
+                    <Box className="menu_name">Tanlangan Maqola</Box>
+                    <Box className="menu_content">
+                      <TViewer chosenSingleBoArticle={chosenSingleBoArticle} />
+                    </Box>
+                  </TabPanel>
+
+                  <TabPanel value="6">
+                    <Box className="menu_name">Ma'lumotlarni o'zgartirish</Box>
+                    <Box className="menu_content">
+                      <MySettings />
+                    </Box>
+                  </TabPanel>
+                </Box>
+              </Stack>
+
+              <Stack className="my_page_right">
+                <Box className="order_info_box">
+                  <a onClick={() => setValue("6")} className="settings_btn">
+                    <SettingsIcon />
+                  </a>
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                  >
+                    <div className="order_user_img">
                       <img
                         src={
-                          chosenMember?.mb_type === "RESTAURANT"
-                            ? "/icons/restaurant.svg"
-                            : "/icons/User.svg"
+                          verifiedMemberData?.mb_image
+                            ? verifiedMemberData?.mb_image
+                            : "/auth/default_user.svg"
                         }
+                        style={{
+                          width: "117px",
+                          height: "112px",
+                          borderRadius: "37px",
+                        }}
+                        className="order_user_avatar"
                       />
+                      <div className="order_user_icon_box">
+                        <img
+                          src={
+                            chosenMember?.mb_type === "RESTAURANT"
+                              ? "/icons/restaurant.svg"
+                              : "/icons/User.svg"
+                          }
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <span className={"order_user_name"}>
-                    {verifiedMemberData?.mb_nick}
+                    <span className={"order_user_name"}>
+                      {chosenMember?.mb_nick}
+                    </span>
+                    <span className={"order_user_prof"}>
+                      {chosenMember?.mb_type}
+                    </span>
+                  </Box>
+                  <Box className="user_media_box">
+                    <FacebookIcon />
+                    <InstagramIcon />
+                    <TelegramIcon />
+                    <YouTubeIcon />
+                  </Box>
+
+                  <Box className="user_media_box_1">
+                    <p className="follows">
+                      Followers: {chosenMember?.mb_subscriber_cnt}
+                    </p>
+                    <p className="follows">
+                      Followings: {chosenMember?.mb_follow_cnt}
+                    </p>
+                  </Box>
+
+                  <span className="user_desc">
+                    {chosenMember?.mb_description ??
+                      "Qo'shimcha ma'lumot kiritilmagan"}
                   </span>
-                  <span className={"order_user_prof"}>
-                    {verifiedMemberData?.mb_type}
-                  </span>
+
+                  <Box className="btn_right" sx={{ mt: "20px" }}>
+                    <TabList
+                      onChange={handleChange}
+                      aria-label="lab API tabs example"
+                    >
+                      <Tab
+                        style={{ flexDirection: "column" }}
+                        value="4"
+                        component={(e) => (
+                          <Button
+                            variant="contained"
+                            onClick={() => setValue("4")}
+                          >
+                            Maqola yozish
+                          </Button>
+                        )}
+                      />
+                    </TabList>
+                  </Box>
                 </Box>
-                <Box className={"user_media_box"}>
-                  <FacebookIcon />
-                  <InstagramIcon />
-                  <TelegramIcon />
-                  <YouTubeIcon />
-                </Box>
-                <Box className={"user_media_box"}>
-                  <p className={"follows"}>
-                    Followers: {chosenMember?.mb_subscriber_cnt}
-                  </p>
-                  <p className={"follows"}>
-                    Followings: {chosenMember?.mb_follow_cnt}
-                  </p>
-                </Box>
-                <p className={"user_desc"}>
-                  {chosenMember?.mb_description ??
-                    "Qo'shimcha ma'lumot kiritilmagan"}
-                </p>
-                <Box
-                  display={"flex"}
-                  justifyContent={"flex-end"}
-                  sx={{ mt: "10px" }}
-                >
+
+                <Box className="my_page_menu">
                   <TabList
+                    orientation="vertical"
+                    variant="scrollable"
+                    value={value}
                     onChange={handleChange}
-                    aria-label="lab API tabs example"
+                    aria-label="Vertical tabs example"
                   >
                     <Tab
-                      style={{ flexDirection: "column" }}
-                      value={"4"}
-                      component={(e) => (
-                        <Button
-                          variant={"contained"}
-                          onClick={() => setValue("4")}
+                      style={{ display: "flex", flexDirection: "column" }}
+                      value="1"
+                      component={() => (
+                        <div
+                          className={`menu_box `}
+                          onClick={() => setValue("1")}
                         >
-                          Maqola Yozish
-                        </Button>
+                          <img src="/icons/pencil.svg" />
+                          <span>Maqolalarim</span>
+                        </div>
+                      )}
+                    />
+                    <Tab
+                      style={{ display: "flex", flexDirection: "column" }}
+                      value="2"
+                      component={() => (
+                        <div
+                          className={`menu_box`}
+                          onClick={() => setValue("2")}
+                        >
+                          <img src={"/icons/follower.svg"} />
+                          <span>Followers</span>
+                        </div>
+                      )}
+                    />
+                    <Tab
+                      style={{ display: "flex", flexDirection: "column" }}
+                      value="3"
+                      component={() => (
+                        <div
+                          className={`menu_box`}
+                          onClick={() => setValue("3")}
+                        >
+                          <img src={"/icons/following.svg"} alt="Following" />
+                          <span>Following</span>
+                        </div>
                       )}
                     />
                   </TabList>
                 </Box>
-              </Box>
-              <Box className={"my_page_menu"}>
-                <TabList
-                  orientation="vertical"
-                  variant="scrollable"
-                  value={value}
-                  onChange={handleChange}
-                  aria-label="Vertical tabs example"
-                  sx={{ borderRight: 1, borderColor: "divider", width: "95%" }}
-                >
-                  <Tab
-                    style={{ flexDirection: "column" }}
-                    value={"1"}
-                    component={() => (
-                      <div className={`menu_box`} onClick={() => setValue("1")}>
-                        <img src={"/icons/pencil.svg"} />
-                        <span>Maqolalarim</span>
-                      </div>
-                    )}
-                  />
-                  <Tab
-                    style={{ flexDirection: "column" }}
-                    value={"2"}
-                    component={() => (
-                      <div className={`menu_box`} onClick={() => setValue("2")}>
-                        <img src={"/icons/follower.svg"} />
-                        <span>Follower</span>
-                      </div>
-                    )}
-                  />
-                  <Tab
-                    style={{ flexDirection: "column" }}
-                    value={"3"}
-                    component={() => (
-                      <div
-                        className={`menu_box ${value} `}
-                        onClick={() => setValue("3")}
-                      >
-                        <img src={"/icons/following.svg"} />
-                        <span>Following</span>
-                      </div>
-                    )}
-                  />
-                </TabList>
-              </Box>
-            </Stack>
+              </Stack>
+            </Box>
           </TabContext>
         </Stack>
       </Container>

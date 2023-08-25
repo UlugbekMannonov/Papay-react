@@ -19,6 +19,7 @@ export default function Basket(props: any) {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
   const itemsPrice = cartItems.reduce(
     (a: any, c: CartItem) => a + c.price * c.quantity,
@@ -26,6 +27,7 @@ export default function Basket(props: any) {
   );
   const shippingPrice = itemsPrice > 100 ? 0 : 2;
   const totalPrice = itemsPrice + shippingPrice;
+
   /** HANDLERS **/
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -33,11 +35,13 @@ export default function Basket(props: any) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const processOrderHandler = async () => {
     try {
       assert.ok(verifiedMemberData, Definer.auth_err1);
       const order = new OrderApiService();
       await order.createOrder(cartItems);
+
       onDeleteAll();
       handleClose();
 
@@ -48,6 +52,7 @@ export default function Basket(props: any) {
       sweetErrorHandling(err).then();
     }
   };
+
   return (
     <Box className={"hover-line"}>
       <IconButton
@@ -101,6 +106,7 @@ export default function Basket(props: any) {
           <Box className={"all_check_box"}>
             {false ? <div>Cart is empty!</div> : <div>My Cart Products:</div>}
           </Box>
+
           <Box className={"orders_main_wrapper"}>
             <Box className={"orders_wrapper"}>
               {cartItems.map((item: CartItem) => {

@@ -3,6 +3,7 @@ import "../css/App.css";
 import "../css/navbar.css";
 import "../css/footer.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 import { OrdersPage } from "./screens/OrdersPage";
 import { MemberPage } from "./screens/MemberPage";
 import { HelpPage } from "./screens/HelpPage";
@@ -22,14 +23,13 @@ import {
   sweetTopSmallSuccessAlert,
 } from "../lib/sweetAlert";
 import { Definer } from "../lib/Definer";
-import MemberApiService from "./apiServices/memberApiService";
+import MemberAipService from "./apiServices/memberApiService";
 import "../app/apiServices/verify";
 import { CartItem } from "../types/others";
 import { Product } from "../types/product";
-// import { verifiedMemberData } from "../app/apiServices/verify";
+
 function App() {
   /** INITIALIZATIONS */
-
   const [path, setPath] = useState();
   const main_path = window.location.pathname;
   const [signUpOpen, setSignUpOpen] = useState(false);
@@ -38,15 +38,17 @@ function App() {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const cartJson: any = localStorage.getItem("cart_data");
   const current_cart: CartItem[] = JSON.parse(cartJson) ?? [];
   const [cartItems, setCartItems] = useState<CartItem[]>(current_cart);
-  
+
   /** HANDLERS */
   const handleSignUpOpen = () => setSignUpOpen(true);
   const handleSignUpClose = () => setSignUpOpen(false);
   const handleLoginOpen = () => setLoginOpen(true);
   const handleLoginClose = () => setLoginOpen(false);
+
   const handleLogOutClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -55,7 +57,7 @@ function App() {
   };
   const handleLogOutRequest = async () => {
     try {
-      const memberApiService = new MemberApiService();
+      const memberApiService = new MemberAipService();
       await memberApiService.logOutRequest();
       await sweetTopSmallSuccessAlert("success", 700, true);
     } catch (err: any) {
@@ -63,6 +65,7 @@ function App() {
       sweetFailureProvider(Definer.general_err1);
     }
   };
+
   const onAdd = (product: Product) => {
     const exist: any = cartItems.find(
       (item: CartItem) => item._id === product._id
@@ -109,6 +112,7 @@ function App() {
       localStorage.setItem("cart_data", JSON.stringify(cart_updated));
     }
   };
+
   const onDelete = (item: CartItem) => {
     const cart_updated = cartItems.filter(
       (ele: CartItem) => ele._id !== item._id
@@ -120,6 +124,7 @@ function App() {
     setCartItems([]);
     localStorage.removeItem("cart_data");
   };
+
   return (
     <Router>
       {main_path == "/" ? (
@@ -201,7 +206,9 @@ function App() {
           <HomePage />
         </Route>
       </Switch>
+
       <Footer />
+
       <AuthenticationModal
         loginOpen={loginOpen}
         handleLoginOpen={handleLoginOpen}
@@ -213,4 +220,5 @@ function App() {
     </Router>
   );
 }
+
 export default App;

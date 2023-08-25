@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Stack, Pagination, PaginationItem } from "@mui/material";
+import { Box, Pagination, PaginationItem, Stack } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import FollowApiService from "../../apiServices/followApiService";
@@ -22,7 +22,6 @@ import { Follower, Following, FollowSearchObj } from "../../../types/follow";
 import { serverApi } from "../../../lib/config";
 import { verifiedMemberData } from "../../apiServices/verify";
 
-
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
   setMemberFollowings: (data: Following[]) =>
@@ -37,16 +36,10 @@ const memberFollowingsRetriever = createSelector(
   })
 );
 
-const followings = [
-  { mb_nick: "dean" },
-  { mb_nick: "justin" },
-  { mb_nick: "jason" },
-];
-
 export function MemberFollowing(props: any) {
   /** INITIALIZATIONS */
   const history = useHistory();
-  const { mb_id, followRebuild, setFollowRebuild } = props;
+  const { mb_id, followeRebuild, setFollowRebuild } = props;
   const { setMemberFollowings } = actionDispatch(useDispatch());
   const { memberFollowings } = useSelector(memberFollowingsRetriever);
   const [followingsSearchObj, setFollowingsSearchObj] =
@@ -58,7 +51,7 @@ export function MemberFollowing(props: any) {
       .getMemberFollowings(followingsSearchObj)
       .then((data) => setMemberFollowings(data))
       .catch((err) => console.log(err));
-  }, [followingsSearchObj, followRebuild]);
+  }, [followingsSearchObj, followeRebuild]);
 
   /** HANDLERS */
   const unsubscribeHandler = async (e: any, id: string) => {
@@ -70,7 +63,7 @@ export function MemberFollowing(props: any) {
       await followService.unsubscribe(id);
 
       await sweetTopSmallSuccessAlert("unsubscribed successfully", 700, false);
-      setFollowRebuild(!followRebuild);
+      setFollowRebuild(!followeRebuild);
     } catch (err: any) {
       console.log(err);
       sweetErrorHandling(err).then();
@@ -87,13 +80,12 @@ export function MemberFollowing(props: any) {
     document.location.reload();
   };
 
-  
   return (
     <Stack>
       {memberFollowings.map((following: Following) => {
         const image_url = following?.follow_member_data?.mb_image
           ? `${serverApi}/${following.follow_member_data.mb_image}`
-          : "/auth/default_user.svg";
+          : "/auth/default_user_1.png";
         return (
           <Box className="follow_box" style={{ cursor: "pointer" }}>
             <Avatar

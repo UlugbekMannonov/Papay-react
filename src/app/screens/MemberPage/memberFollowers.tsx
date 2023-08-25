@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Pagination,
-  PaginationItem,
-  Button,
-  Container,
-  Link,
-  Stack,
-} from "@mui/material";
+import { Box, Pagination, PaginationItem, Stack } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import assert from "assert";
 import { Definer } from "../../../lib/Definer";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useHistory } from "react-router-dom";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
@@ -31,7 +22,6 @@ import {
 } from "../../../lib/sweetAlert";
 import { verifiedMemberData } from "../../apiServices/verify";
 
-
 /** REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
   setMemberFollowers: (data: Follower[]) => dispach(setMemberFollowers(data)),
@@ -45,16 +35,10 @@ const memberFollowersRetriever = createSelector(
   })
 );
 
-// const followers = [
-//   {mb_nick: "Botir", following: true},
-//   {mb_nick: "Jonibek", following: false},
-//   {mb_nick: "Justin", following: true},
-// ];
-
 export function MemberFollowers(props: any) {
   /** INITIALIZATIONS */
   const history = useHistory();
-  const { mb_id, followRebuild, setFollowRebuild } = props;
+  const { mb_id, followeRebuild, setFollowRebuild } = props;
   const { setMemberFollowers } = actionDispatch(useDispatch());
   const { memberFollowers } = useSelector(memberFollowersRetriever);
   const [followersSearchObj, setFollowersSearchObj] = useState<FollowSearchObj>(
@@ -67,7 +51,7 @@ export function MemberFollowers(props: any) {
       .getMemberFollowers(followersSearchObj)
       .then((data) => setMemberFollowers(data))
       .catch((err) => console.log(err));
-  }, [followersSearchObj, followRebuild]);
+  }, [followersSearchObj, followeRebuild]);
 
   /** HANDLERS */
   const subscribeHandler = async (e: any, id: string) => {
@@ -77,8 +61,9 @@ export function MemberFollowers(props: any) {
 
       const followService = new FollowApiService();
       await followService.subscribe(id);
+
       await sweetTopSmallSuccessAlert("subscribed successfully", 700, false);
-      setFollowRebuild(!followRebuild);
+      setFollowRebuild(!followeRebuild);
     } catch (err: any) {
       console.log(err);
       sweetErrorHandling(err).then();
@@ -100,7 +85,7 @@ export function MemberFollowers(props: any) {
       {memberFollowers?.map((follower: Follower) => {
         const image_url = follower?.subscriber_member_data?.mb_image
           ? `${serverApi}/${follower.subscriber_member_data.mb_image}`
-          : "/auth/default_user.svg";
+          : "/auth/default_user_1.png";
         return (
           <Box className={"follow_box"}>
             <Avatar

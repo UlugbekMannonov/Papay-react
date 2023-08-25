@@ -53,6 +53,7 @@ export function NavbarOthers(props: any) {
                 Jamiyat
               </NavLink>
             </Box>
+
             {verifiedMemberData ? (
               <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/member-page" activeClassName="underline">
@@ -60,11 +61,13 @@ export function NavbarOthers(props: any) {
                 </NavLink>
               </Box>
             ) : null}
+
             <Box className="hover-line" onClick={props.setPath}>
               <NavLink to="/help" activeClassName="underline">
                 Yordam
               </NavLink>
             </Box>
+
             <Basket
               cartItems={props.cartItems}
               onAdd={props.onAdd}
@@ -91,6 +94,7 @@ export function NavbarOthers(props: any) {
                 onClick={props.handleLogOutClick}
               />
             )}
+
             <Menu
               anchorEl={props.anchorEl}
               open={props.open}

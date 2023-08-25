@@ -12,7 +12,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-import { TViewer } from "../../components/tuiEditor/TViewer";
+import TViewer from "../../components/tuiEditor/TViewer";
 import { Member } from "../../../types/user";
 import { BoArticle, SearchMemberArticlesObj } from "../../../types/boArticle";
 import { useHistory } from "react-router-dom";
@@ -111,7 +111,7 @@ export function VisitOtherPage(props: any) {
         .catch((err) => console.log(err));
     }
     communityService
-      .getMemberCommunityArticles(memberArticleSearchObj)
+      .getCommunityArticles(memberArticleSearchObj)
       .then((data) => setchosenMemberBoArticles(data))
       .catch((err) => console.log(err));
   }, [memberArticleSearchObj, chosen_mb_id, articlesRebuild]);

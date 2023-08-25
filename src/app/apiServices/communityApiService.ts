@@ -82,7 +82,7 @@ class CommunityApiService {
     }
   }
 
-  public async getMemberCommunityArticles(data: SearchMemberArticlesObj) {
+  public async getCommunityArticles(data: SearchMemberArticlesObj) {
     try {
       let url = `/community/articles?mb_id=${data.mb_id}&page=${data.page}&limit=${data.limit}`;
 

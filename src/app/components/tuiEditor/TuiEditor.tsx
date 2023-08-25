@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 
@@ -23,7 +23,7 @@ import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 import { useHistory } from "react-router-dom";
 
-export const TuiEditor = (props: any) => {
+const TuiEditor = (props: any) => {
   /** INITIALIZATIONS */
   const history = useHistory();
   const editorRef = useRef();
@@ -94,14 +94,13 @@ export const TuiEditor = (props: any) => {
   return (
     <Stack>
       <Stack
-        direction={"row"}
-        style={{ margin: "40px" }}
-        justifyContent={"space-evenly"}
+        direction="row"
+        style={{ margin: "40px", justifyContent: "space-evenly" }}
       >
         <Box className={"form_row"} style={{ width: "300px" }}>
           <Typography
-            style={{ color: "rgb(225 255 233", margin: "10px" }}
             variant="h3"
+            style={{ margin: "10px", color: "rgb(225 255 233)" }}
           >
             Category
           </Typography>
@@ -112,16 +111,16 @@ export const TuiEditor = (props: any) => {
               inputProps={{ "aria-label": "Without label" }}
               onChange={changeCategoryHandler}
             >
-              <MenuItem value={""}>
+              <MenuItem value="">
                 <span>Kategoriyani tanlang</span>
               </MenuItem>
-              <MenuItem value={"celebrity"}>Mashhurlar</MenuItem>
-              <MenuItem value={"evaluation"}>Restaurant baho</MenuItem>
-              <MenuItem value={"story"}>Mening hikoyam</MenuItem>
+              <MenuItem value="celebrity">Mashhurlar</MenuItem>
+              <MenuItem value="evaluation">Restaurant Baho</MenuItem>
+              <MenuItem value="story">Mening Hikoyam</MenuItem>
             </Select>
           </FormControl>
         </Box>
-        <Box className={"form_row"} style={{ width: "300px" }}>
+        <Box className="form_row" style={{ width: "300px" }}>
           <Typography
             style={{ color: "rgb(225 255 233)", margin: "10px" }}
             variant="h3"
@@ -138,14 +137,14 @@ export const TuiEditor = (props: any) => {
         </Box>
       </Stack>
 
+      {/* @ts-ignore */}
       <Editor
-        /*@ts-ignore*/
         ref={editorRef}
         initialValue="Type here"
         placeholder="Type here"
         previewStyle="vertical"
         height="640px"
-        // initialEditType="markdown"
+        initialEditType="WYSIWYG"
         toolbarItems={[
           ["heading", "bold", "italic", "strike"],
           ["image", "table", "link"],
@@ -160,10 +159,11 @@ export const TuiEditor = (props: any) => {
           },
         }}
         events={{
-          load: function param(any) {},
+          load: function (param: any) {},
         }}
       />
-      <Stack flexDirection={"row"} justifyContent="center">
+
+      <Stack direction="row" justifyContent="center">
         <Button
           variant="contained"
           color="primary"
@@ -176,3 +176,5 @@ export const TuiEditor = (props: any) => {
     </Stack>
   );
 };
+
+export default TuiEditor;

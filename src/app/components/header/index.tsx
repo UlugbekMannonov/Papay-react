@@ -17,6 +17,7 @@ import { verifiedMemberData } from "../../apiServices/verify";
 
 export function NavbarHome(props: any) {
   /** INITIALIZATIONS */
+
   return (
     <div className="format home_navbar">
       <Container>
@@ -56,6 +57,7 @@ export function NavbarHome(props: any) {
                 Jamiyat
               </NavLink>
             </Box>
+
             {verifiedMemberData ? (
               <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/member-page" activeClassName="underline">
@@ -63,11 +65,13 @@ export function NavbarHome(props: any) {
                 </NavLink>
               </Box>
             ) : null}
+
             <Box className="hover-line" onClick={props.setPath}>
               <NavLink to="/help" activeClassName="underline">
                 Yordam
               </NavLink>
             </Box>
+
             <Basket
               cartItems={props.cartItems}
               onAdd={props.onAdd}
@@ -94,6 +98,7 @@ export function NavbarHome(props: any) {
                 onClick={props.handleLogOutClick}
               />
             )}
+
             <Menu
               anchorEl={props.anchorEl}
               open={props.open}
@@ -137,6 +142,7 @@ export function NavbarHome(props: any) {
             </Menu>
           </Stack>
         </Stack>
+
         <Stack className="head_information" justifyContent={"row"}>
           <Stack
             justifyContent={"column"}

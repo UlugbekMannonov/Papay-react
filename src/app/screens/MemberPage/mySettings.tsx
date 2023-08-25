@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import Button from "@mui/material/Button";
 import { verifiedMemberData } from "../../apiServices/verify";
@@ -10,7 +10,7 @@ import {
   sweetErrorHandling,
   sweetTopSmallSuccessAlert,
 } from "../../../lib/sweetAlert";
-import MemberApiService from "../../apiServices/memberApiService";
+import MemberAipService from "../../apiServices/memberApiService";
 
 export function MySettings(props: any) {
   /** INITIALIZATIONS */
@@ -61,7 +61,7 @@ export function MySettings(props: any) {
 
   const handleSubmitButton = async () => {
     try {
-      const memberService = new MemberApiService();
+      const memberService = new MemberAipService();
       const result = await memberService.updateMemberData(memberUpdate);
 
       assert.ok(result, Definer.general_err1);
@@ -78,19 +78,20 @@ export function MySettings(props: any) {
   };
 
   return (
-    <Stack className={"my_settings_page"}>
-      <Box className={"member_media_frame"}>
+    <Stack className="my_settings_page">
+      <Box className="member_media_frame">
         <img
           src={file}
-          className={"mb_image"}
-          style={{ borderRadius: "50%" }}
+          className="nb_image"
           width={"100px"}
-          height={"100px"}
+          style={{ borderRadius: "50%" }}
+          height="100px"
         />
-        <div className={"media_change_box"}>
-          <span>Rasm Yuklash</span>
-          <p>JPG, JPEG, PNG rasmlarini yuklay olasiz!</p>
-          <div className={"up_del_box"}>
+
+        <div className="media_change_box">
+          <span className="text_rasm">Rasm Yuklash</span>
+          <p className="text_rasm_1">JPG, JPEG, PNG rasmlarni yuklay olasiz!</p>
+          <div className="up_del_box">
             <Button
               component="label"
               style={{ minWidth: "0" }}
@@ -102,11 +103,12 @@ export function MySettings(props: any) {
           </div>
         </div>
       </Box>
-      <Box className={"input_frame"}>
-        <div className={"long_input"}>
-          <label className={"spec_label"}>Ism</label>
+
+      <Box className="input_frame">
+        <div className="long_input">
+          <label className="spec_label">Ism</label>
           <input
-            className={"spec_input mb_nick"}
+            className="spec_input mb_nick"
             type="text"
             placeholder={verifiedMemberData?.mb_nick}
             name="mb_nick"
@@ -114,43 +116,47 @@ export function MySettings(props: any) {
           />
         </div>
       </Box>
-      <Box className={"input_frame"}>
-        <div className={"short_input"}>
-          <label className={"spec_label"}>Telefon Raqam</label>
+
+      <Box className="input_frame">
+        <div className="short_input long_input">
+          <label className="spec_label">Telefon Raqam</label>
           <input
-            className={"spec_input mb_phone"}
+            className="spec_input mb_phone"
             type="text"
             placeholder={verifiedMemberData?.mb_phone}
             name="mb_phone"
             onChange={changeMemberPhoneHandler}
           />
         </div>
-        <div className={"short_input"}>
-          <label className={"spec_label"}>Manzil</label>
+
+        <div className="short_input long_input">
+          <label className="spec_label">Manzil</label>
           <input
-            className={"spec_input  mb_address"}
+            className="spec_input mb_address"
             type="text"
             placeholder={
-              verifiedMemberData?.mb_address ?? "Manzil kiritilmagan"
+              verifiedMemberData?.mb_address ?? "manzil kiritilmagan"
             }
             name="mb_address"
             onChange={changeMemberAddressHandler}
           />
         </div>
       </Box>
-      <Box className={"input_frame"}>
-        <div className={"long_input"}>
-          <label className={"spec_label"}>Ma'lumot</label>
+
+      <Box className="input_frame">
+        <div className="long_input">
+          <label className="spec_label">Ma'lumot</label>
           <textarea
-            className={"spec_textarea mb_description"}
             placeholder={verifiedMemberData?.mb_description ?? "mavjud emas"}
             name="mb_description"
+            className="spec_textarea mb_description"
             onChange={changeMemberDescriptionHandler}
           />
         </div>
       </Box>
-      <Box display={"flex"} justifyContent={"flex-end"} sx={{ mt: "25px" }}>
-        <Button variant={"contained"} onClick={handleSubmitButton}>
+
+      <Box display="flex" justifyContent="flex-end" sx={{ mt: "25px" }}>
+        <Button variant="contained" onClick={handleSubmitButton}>
           Saqlash
         </Button>
       </Box>
